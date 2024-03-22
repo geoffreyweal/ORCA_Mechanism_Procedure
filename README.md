@@ -229,7 +229,7 @@ Here, we perform a geometry optimization to optimize the system. The tags here i
 
 **NOTE 1**: I have set the electronic optimisation steps to be tight (``TightSCF``). This is just to make sure the electronic are well converged, but it may be overdo. If you have problems, you can try using the normal convergence criteria for the electronic steps (``NormalSCF``)
 
-**NOTE 2**: [Click here](https://sites.google.com/site/orcainputlibrary/numerical-precision?authuser=0) for more information about the electronic convergence and the interaction grid. 
+**NOTE 2**: [Click here](https://sites.google.com/site/orcainputlibrary/numerical-precision?authuser=0) for more information about other electronic convergence and interaction grid settings.
 
 Also include the ``xyz`` files of your reactant and product molecules in the ``Reactant`` and ``Product`` folders, respectively.
 
