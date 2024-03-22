@@ -280,7 +280,7 @@ ${orca_exe} orca.inp > output.out
 
 ### What to do if you have more than one reactant (or product)
 
-Sometimes if you have more reactant (or product), you may also need to obtain the energy of the reactants (or products) when they are separated. Often you can just calculate these separately as their own ORCA calculations. However, for systems involving metals in particular, it is a good idea to check if there is a transition state for a metal coordinating to a ligand. There probably should not be, but is good to check. In this case, read the [ORCA Coalesce Reactants Procedure](https://github.com/geoffreyweal/ORCA_Coalesce_Reactants_Procedure) tutorial to understand how to check this. 
+Sometimes if you have more reactant (or product), you may also need to obtain the energy of the reactants (or products) when they are separated. Often you can just calculate these separately as their own ORCA calculations. However, for systems involving metals in particular, it is a good idea to check if there is a transition state for a metal coordinating to a ligand. There probably should not be a transition state, but is good to check. In this case, read the [ORCA Coalesce Reactants Procedure](https://github.com/geoffreyweal/ORCA_Coalesce_Reactants_Procedure) tutorial to understand how to check this. 
 
 
 ### Outputs from ORCA
@@ -555,7 +555,7 @@ See https://sites.google.com/site/orcainputlibrary/geometry-optimizations/tutori
 
 In an NEB, we trace a path from the reactant to the product. An optimization is performed across all the images at the same time in order to try to find the transition step.
 
-There are a few different ways you can proceed when doing an NEB calculation. For this reason, see the link below to learnabout how to do NEBs in ORCA:
+There are a few different ways you can proceed when doing an NEB calculation. For this reason, see the link below to learn about how to do NEBs in ORCA:
 
 https://github.com/geoffreyweal/ORCA_NEB_Procedure
 
