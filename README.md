@@ -280,7 +280,7 @@ ${orca_exe} orca.inp > output.out
 
 ### What to do if you have more than one reactant (or product)
 
-Sometime if you have more reactant (or product), you may also need to obtain the energy of the reactants (or products) when they are separated. Sometimes you can just calculate these separately as their own ORCA calculations. However, for system involving metals in particular, it is a good idea to check if there is a transition state for a metal coordinating to a ligand. There probably should not be, but is good to check. In this case, read the [ORCA Coalesce Reactants Procedure](https://github.com/geoffreyweal/ORCA_Coalesce_Reactants_Procedure) tutorial to understand how to check this. 
+Sometimes if you have more reactant (or product), you may also need to obtain the energy of the reactants (or products) when they are separated. Often you can just calculate these separately as their own ORCA calculations. However, for systems involving metals in particular, it is a good idea to check if there is a transition state for a metal coordinating to a ligand. There probably should not be, but is good to check. In this case, read the [ORCA Coalesce Reactants Procedure](https://github.com/geoffreyweal/ORCA_Coalesce_Reactants_Procedure) tutorial to understand how to check this. 
 
 
 ### Outputs from ORCA
