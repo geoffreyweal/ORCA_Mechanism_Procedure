@@ -1313,13 +1313,29 @@ Scaling factor for frequencies =  1.000000000  (already applied!)
   53:      3585.97 cm**-1
 ```
 
+## Step 4B continued: Example of an issue with Step 4 in this case, but all is well.
+
+In this example, the optimised reactant from Step 1 looks like this:
+
+![Optimised reactant](Figures/4_Issue_but_Fine_Example/1_Reactant.png)
+
+However, we get the following for the backwards structure from step 4A.
+
+![Backwards structure](Figures/4_Issue_but_Fine_Example/4A_Backwards.png)
+
+This is fine because the IRC is set by default with loose convergence criteria. These are the best settings for 4A, otherwise it takes forever to complete the IRC process. This is the reason for step 4B, we then tighten the converged with a regular geometric optimisation. By doing this, we get the following for the tightly converged backwards step.
+
+![Compare optimisations](Figures/4_Issue_but_Fine_Example/Comparison.png)
+
+We see that the tightly converged backwards structure from 4B gives a similar structure to the converged reactant from step 1, so this is great.
+
+One problem however is that the backwards structure from step 4B did not converge. However, as we have mentioned this structure is very similar to the optimised reactant structure in step 1. 
+* We could retry this calculation from the last geometric step from step 4B, as it is common that ORCA will fail for various reason and restarting ORCA sorts everything out
+* However, because the backwards structure we got from step 4B is pretty much the same as the optimised reactant from step 1, I would be pragmatic and be happy that step 4B backwards gave us the result we were looking for. 
+
 ## Step 5: Check that you are happy
 
-Before finalising everything, it is important to do a final check that everything is all good. In this example, the ``Backwards`` step did not converge. Lets take a look at the final geometric step of the ``Backwards`` step and compare it to the optimised ``Reactant`` from Step 1 (see below):
-
-![Compare optimisations](Figures/5_Checks/Comparison.png)
-
-We can see that both the ``Backwards`` and ``Reactant`` structures have Cu bonded to the N in benzylamine, so I would be happy that we have obtain the reactant that we want to get from the ``Backwards`` IRC step.
+Before finalising everything, it is important to do a final check that everything is all good and that there are no issues with your output files from this proceedure and you are happy with all the calculations and the decisions you made, as this process is often not smooth and requires playing around. So finalising everything is a good idea to make sure you haven't missed anything important. 
 
 
 ## Step 6: Obtain the energies and structures of your reactants, products, and transition state
