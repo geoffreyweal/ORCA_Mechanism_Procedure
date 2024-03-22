@@ -278,6 +278,11 @@ ${orca_exe} orca.inp > output.out
 
 **NOTE 4**: While ORCA has been told to use 2000 (MB) * 32 = 64 GB in the ``.inp`` file, we have told slurm to reserve ``72GB`` of memory. It is a good idea to give your ORCA job a few GBs of RAM extra in slurm just in case ORCA accidentally goes over it's allocated RAM. Here, I have abitrarily given this job 12GB more RAM just in case. 
 
+### What to do if you have more than one reactant (or product)
+
+Sometime if you have more reactant (or product), you may also need to obtain the energy of the reactants (or products) when they are separated. Sometimes you can just calculate these separately as their own ORCA calculations. However, for system involving metals in particular, it is a good idea to check if there is a transition state for a metal coordinating to a ligand. There probably should not be, but is good to check. In this case, read the [ORCA Coalesce Reactants Procedure](https://github.com/geoffreyweal/ORCA_Coalesce_Reactants_Procedure) tutorial to understand how to check this. 
+
+
 ### Outputs from ORCA
 
 When ORCA is running, it will output several files, including an ``output.out`` file, an ``orca.xyz`` file, and an ``orca_trj.xyz`` file.
