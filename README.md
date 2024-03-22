@@ -587,11 +587,11 @@ The reason for these settings is because we want to refine the transition state 
 * The hessian is sort of the second derivative of the potential energy surface (PES), equivalent to the curvature of the PES. It is used to make a desision about how to modify your chemical system so you gets closer to a converged system. It needs to be obtained for each geoemtric step you perform
 * Calculating the full hessian is very computationally expensive, so commonly approximations are made so that the full hessian does not need to calculated after each geoemtric step. 
 * In this case, I have chosen to calculate the full hessian after each step because I assume I am near the transition state after the SCAN/NEB, and want to make sure it doesnt deviate from converging. This is probably overdoing it however. 
-* From the [tutorial here](https://sites.google.com/site/orcainputlibrary/geometry-optimizations/tutorial-saddlepoint-ts-optimization-via-relaxed-scan#h.pnxa1btinh0w)) they recalculate the full hessian after 5 geometric step.
+* From the [tutorial here](https://sites.google.com/site/orcainputlibrary/geometry-optimizations/tutorial-saddlepoint-ts-optimization-via-relaxed-scan#h.pnxa1btinh0w), they recalculate the full hessian after 5 geometric step.
 
 Approximations to the Hessian are general helpful for normal optimisations, and for this reason recommended and set by default. 
 
-See https://sites.google.com/site/orcainputlibrary/geometry-optimizations/tutorial-saddlepoint-ts-optimization-via-relaxed-scan#h.pnxa1btinh0w for a reference for these settings
+See the [tutorial here](https://sites.google.com/site/orcainputlibrary/geometry-optimizations/tutorial-saddlepoint-ts-optimization-via-relaxed-scan#h.pnxa1btinh0w) for a reference for these settings
 
 
 The full ``orca.inp`` file for this example is given below (found in ``Examples/Step3_Opt_TS/orca.inp``): 
@@ -678,8 +678,7 @@ Just like when we were checking convergence of the product and reactant in step 
 We want to look at the frequency calculation and check that there is only 1 negative frequency. This tells us that we are on a saddlepoint on the potential energy landscape.
 * Generally any negative frequency is good, but a negative frequency that is greater than $-100cm^{-1}$ is a good sign that the transition state is good. 
 * This is because the value of the frequency indicates the curvative of the transition state across the saddlepoint. The bigger the number, the steeper the energy decent on each side of the saddlepoint.
-* A negative frequency between $-20cm^{-1}$ and $-100cm^{-1}$ is fine, but just beware you may have problems with step 4. 
-    * A transition state with this value of negative frequency is absolutely fine, it might just have problems with step 4 for technical reasons.
+* A negative frequency between $-20cm^{-1}$ and $-100cm^{-1}$ is fine, but just beware you may have problems with step 4 for technical reasons.
 
 In the example below, you can see we only have one negative vibrational frequency, so our transition state is good to go!
 
