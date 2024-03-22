@@ -226,9 +226,14 @@ Here, we perform a geometry optimization to optimize the system. The tags here i
 * ``TightSCF``: Tells ORCA to tighten the convergence criteria for each electronic step. 
 * ``defgrid2``: Indicates how fine we want the intergration grid to be (This is the default)
 
+
+**NOTE 1**: I have set the electronic optimisation steps to be tight (``TightSCF``). This is just to make sure the electronic are well converged, but it may be overdo. If you have problems, you can try using the normal convergence criteria for the electronic steps (``NormalSCF``)
+
+**NOTE 2**: [Click here](https://sites.google.com/site/orcainputlibrary/numerical-precision?authuser=0) for more information about the electronic convergence and the interaction grid. 
+
 Also include the ``xyz`` files of your reactant and product molecules in the ``Reactant`` and ``Product`` folders, respectively.
 
-**Note**: If your reactants or product contain more than one molecule/chemical system, split them up and localise them individually in their own individual folders. See ``Examples/Step1_Geo_Opt`` for an example for how I do this. 
+**NOTE 3**: If your reactants or product contain more than one molecule/chemical system, split them up and localise them individually in their own individual folders. See ``Examples/Step1_Geo_Opt`` for an example for how I do this. 
 
 An example of the complete ``orca.inp`` file for a local optimisation ORCA job is as follows (from ``Examples/Step1_Geo_Opt/Products/orca.inp``): 
 
