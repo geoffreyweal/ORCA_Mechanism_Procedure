@@ -226,14 +226,9 @@ Here, we perform a geometry optimization to optimize the system. The tags here i
 * ``TightSCF``: Tells ORCA to tighten the convergence criteria for each electronic step. 
 * ``defgrid2``: Indicates how fine we want the intergration grid to be (This is the default)
 
-
 **NOTE 1**: I have set the electronic optimisation steps to be tight (``TightSCF``). This is just to make sure the electronic are well converged, but it may be overdo. If you have problems, you can try using the normal convergence criteria for the electronic steps (``NormalSCF``)
 
 **NOTE 2**: [Click here](https://sites.google.com/site/orcainputlibrary/numerical-precision?authuser=0) for more information about other electronic convergence and interaction grid settings.
-
-Also include the ``xyz`` files of your reactant and product molecules in the ``Reactant`` and ``Product`` folders, respectively.
-
-**NOTE 3**: If your reactants or product contain more than one molecule/chemical system, split them up and localise them individually in their own individual folders. See ``Examples/Step1_Geo_Opt`` for an example for how I do this. 
 
 An example of the complete ``orca.inp`` file for a local optimisation ORCA job is as follows (from ``Examples/Step1_Geo_Opt/Products/orca.inp``): 
 
@@ -254,7 +249,7 @@ END
 
 **NOTE**: Make sure you include a newline or two at the end of your ``orca.inp`` file, otherwise ORCA will get confused and not run.
 
-Here, ``xyzfile`` allows you to import an xyz file into ORCA. You can add the xyz data directly in the ``.inp`` file, but I find having a separate ``xyz`` file is better because this allow you to look at the xyz file in a gui like in atomic simulation environment (ASE --> https://wiki.fysik.dtu.dk/ase/ase/gui/basics.html and https://wiki.fysik.dtu.dk/ase/ase/gui/gui.html). 
+Here, ``xyzfile`` allows you to import an xyz file into ORCA. You can add the xyz data directly in the ``.inp`` file, but I find having a separate ``xyz`` file is better because this allow you to look at the xyz file in a gui like in atomic simulation environment (ASE --> https://wiki.fysik.dtu.dk/ase/ase/gui/basics.html and https://wiki.fysik.dtu.dk/ase/ase/gui/gui.html). Include the ``xyz`` files of your reactant and product molecules in the ``Reactant`` and ``Product`` folders, respectively. If your reactants or product contain more than one molecule/chemical system, split them up and localise them individually in their own individual folders. 
 
 Submit the job to slurm using the ``submit.sl`` file:
 
