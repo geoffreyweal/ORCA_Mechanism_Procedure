@@ -247,7 +247,7 @@ END
 
 ```
 
-**NOTE**: Make sure you include a newline or two at the end of your ``orca.inp`` file, otherwise ORCA will get confused and not run.
+**NOTE 3**: Make sure you include a newline or two at the end of your ``orca.inp`` file, otherwise ORCA will get confused and not run.
 
 Here, ``xyzfile`` allows you to import an xyz file into ORCA. You can add the xyz data directly in the ``.inp`` file, but I find having a separate ``xyz`` file is better because this allow you to look at the xyz file in a gui like in atomic simulation environment (ASE --> https://wiki.fysik.dtu.dk/ase/ase/gui/basics.html and https://wiki.fysik.dtu.dk/ase/ase/gui/gui.html). Include the ``xyz`` files of your reactant and product molecules in the ``Reactant`` and ``Product`` folders, respectively. If your reactants or product contain more than one molecule/chemical system, split them up and localise them individually in their own individual folders. 
 
@@ -276,7 +276,7 @@ ${orca_exe} orca.inp > output.out
 
 ```
 
-**NOTE**: While ORCA has been told to use 2000 (MB) * 32 = 64 GB in the ``.inp`` file, we have told slurm to reserve ``72GB`` of memory. It is a good idea to give your ORCA job a few GBs of RAM extra in slurm just in case ORCA accidentally goes over it's allocated RAM. Here, I have abitrarily given this job 12GB more RAM just in case. 
+**NOTE 4**: While ORCA has been told to use 2000 (MB) * 32 = 64 GB in the ``.inp`` file, we have told slurm to reserve ``72GB`` of memory. It is a good idea to give your ORCA job a few GBs of RAM extra in slurm just in case ORCA accidentally goes over it's allocated RAM. Here, I have abitrarily given this job 12GB more RAM just in case. 
 
 ### Outputs from ORCA
 
@@ -462,7 +462,7 @@ In this example, we have told ORCA to begin by setting the distance between atom
 
 **NOTE 3**: We have set the number of steps to perform to 441 rather than 440. This is because we are including the endpoint in our SCAN, and I want the increments to be spaced by a rational value (i.e.: $\frac{24.131-2.131}{441-1} = 0.05$ Å step size). This is just a personal preference of mine, and is not a hard rule. 
 
-In this example, we are looking at how a Cu atom could insert itself into a C-H bond. The ``orca.inp`` file for this example is given below (from ``Examples/Step2_Find_TS/SCAN/orca.inp``):
+In this example, we are looking at how a Cu atom could insert itself into a C-H bond. The ``orca.inp`` file for this example is given below (from ``Examples/Step2_Find_TS/SCAN_NormalOPT/orca.inp``):
 
 **NOTE 4**: By default I am use to using ``TightOPT`` for good convergence of the reactants, products, and transition states. However, the SCAN method is just a method for locating the transition state, not finalising a converged state. For this reason, I would recommend using the ``NormalOPT`` convergence settings, as this is fast and allows you to try more variations. If you have problems, try tightening the convergence using ``TightOPT``. 
 
@@ -571,7 +571,7 @@ To perform a ``OptTS`` calcualtion, we include the following line in the ``orca.
 The tags here indicate the following: 
 
 * ``OptTS``: Indicates that we want to optimise the molecule towards the transition state
-* ``NumFreq``: We want to calculate the numerical frequency after the optimisation process to make sure that our transition state only has one negative vibrational frequency (transition states are defined as the lowest energy point between two local minima that has only 1 negative vibrational frequency).
+* ``NumFreq``: We want to calculate the numerical frequency after the optimisation process to make sure that our transition state only has one negative vibrational frequency (transition states are defined as the lowest energy point between two local minima that has only 1 negative vibrational frequency). We are using ``NumFreq`` rather than ``Freq``  (analytically calculated vibrational frequency) because of the ``GEOM`` settings below (I think, based on the [tutorial here](https://sites.google.com/site/orcainputlibrary/geometry-optimizations/tutorial-saddlepoint-ts-optimization-via-relaxed-scan#h.pnxa1btinh0w))
 
 We also include the following in our ``inp`` file: 
 
@@ -582,6 +582,17 @@ We also include the following in our ``inp`` file:
     Recalc_Hess 1  # Recalculate the Hessian for every step
 END
 ```
+
+The reason for these settings is because we want to refine the transition state without converging towards a different saddlepoint unexpectly. This can happen if the Hessian is slightly off, which can happen when using the Hessian approximation methods commonly used in computational chemistry applications.
+* The hessian is sort of the second derivative of the potential energy surface (PES), equivalent to the curvature of the PES. It is used to make a desision about how to modify your chemical system so you gets closer to a converged system. It needs to be obtained for each geoemtric step you perform
+* Calculating the full hessian is very computationally expensive, so commonly approximations are made so that the full hessian does not need to calculated after each geoemtric step. 
+* In this case, I have chosen to calculate the full hessian after each step because I assume I am near the transition state after the SCAN/NEB, and want to make sure it doesnt deviate from converging. This is probably overdoing it however. 
+* From the [tutorial here](https://sites.google.com/site/orcainputlibrary/geometry-optimizations/tutorial-saddlepoint-ts-optimization-via-relaxed-scan#h.pnxa1btinh0w)) they recalculate the full hessian after 5 geometric step.
+
+Approximations to the Hessian are general helpful for normal optimisations, and for this reason recommended and set by default. 
+
+See https://sites.google.com/site/orcainputlibrary/geometry-optimizations/tutorial-saddlepoint-ts-optimization-via-relaxed-scan#h.pnxa1btinh0w for a reference for these settings
+
 
 The full ``orca.inp`` file for this example is given below (found in ``Examples/Step3_Opt_TS/orca.inp``): 
 
