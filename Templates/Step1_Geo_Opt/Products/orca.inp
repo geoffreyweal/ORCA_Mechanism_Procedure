@@ -1,0 +1,11 @@
+!B3LYP DEF2-TZVP D3BJ 
+!OPT FREQ TIGHTOPT TightSCF defgrid2
+%SCF
+    MaxIter 2000       # Here setting MaxIter to a very high number. Intended for systems that require sometimes 1000 iterations before converging (very rare).
+    DIISMaxEq 5        # Default value is 5. A value of 15-40 necessary for difficult systems.
+    directresetfreq 15 # Default value is 15. A value of 1 (very expensive) is sometimes required. A value between 1 and 15 may be more cost-effective.
+END
+%CPCM EPSILON 6.02 REFRAC 1.3723 END
+%PAL NPROCS 32 END
+%maxcore 2000 # This indicates you want ORCA to use only 2GB per core maximum, so ORCA will use only 2GB*32=64GB of memory in total.
+* xyzfile 1 1 product.xyz 

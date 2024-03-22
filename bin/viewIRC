@@ -1,0 +1,183 @@
+#!/usr/bin/env python3
+
+# ========================================================================================
+
+import sys
+import importlib
+import importlib.util
+
+if sys.version_info[0] == 2:
+	toString = ''
+	toString += '\n'
+	toString += '================================================'+'\n'
+	toString += 'This is the EKMC Program'+'\n'
+	toString += 'Version: '+str(__version__)+'\n'
+	toString += '\n'
+	toString += 'The EKMC program requires Python3. You are attempting to execute this program in Python2.'+'\n'
+	toString += 'Make sure you are running the EKMC program in Python3 and try again'+'\n'
+	toString += 'This program will exit before beginning'+'\n'
+	toString += '================================================'+'\n'
+	raise ImportError(toString)
+if sys.version_info[1] < 4:
+	toString = ''
+	toString += '\n'
+	toString += '================================================'+'\n'
+	toString += 'This is the EKMC Program'+'\n'
+	toString += 'Version: '+str(__version__)+'\n'
+	toString += '\n'
+	toString += 'The EKMC program requires Python 3.4 or greater.'+'\n'
+	toString += 'You are using Python '+str('.'.join(sys.version_info))
+	toString += '\n'
+	toString += 'Use a version of Python 3 that is greater or equal to Python 3.4.\n'
+	toString += 'This program will exit before beginning'+'\n'
+	toString += '================================================'+'\n'
+	raise ImportError(toString)
+
+# ----------------------------------------------------------------------------------------
+
+ase_spec = importlib.util.find_spec("ase")
+ase_found = (ase_spec is not None)
+if not ase_found:
+	toString = ''
+	toString += '\n'
+	toString += '================================================'+'\n'
+	toString += 'This is the EKMC Program'+'\n'
+	toString += 'Version: '+str(__version__)+'\n'
+	toString += '\n'
+	toString += 'The EKMC program requires ASE.'+'\n'
+	toString += '\n'
+	toString += 'Install ASE through pip by following the instruction in https://github.com/GardenGroupUO/EKMC'+'\n'
+	toString += 'These instructions will ask you to install ase by typing the following into your terminal\n'
+	toString += 'pip3 install --user --upgrade ase\n'
+	toString += '\n'
+	toString += 'This program will exit before beginning'+'\n'
+	toString += '================================================'+'\n'
+	raise ImportError(toString)	
+
+import ase
+ase_version_minimum = '3.19.0'
+from packaging import version
+#from distutils.version import StrictVersion
+#if StrictVersion(ase.__version__) < StrictVersion(ase_version_minimum):
+if version.parse(ase.__version__) < version.parse(ase_version_minimum):
+	toString = ''
+	toString += '\n'
+	toString += '================================================'+'\n'
+	toString += 'This is the EKMC Program'+'\n'
+	toString += 'Version: '+str(__version__)+'\n'
+	toString += '\n'
+	toString += 'The EKMC program requires ASE greater than or equal to '+str(ase_version_minimum)+'.'+'\n'
+	toString += 'The current version of ASE you are using is '+str(ase.__version__)+'.'+'\n'
+	toString += '\n'
+	toString += 'Install ASE through pip by following the instruction in https://github.com/GardenGroupUO/EKMC'+'\n'
+	toString += 'These instructions will ask you to install ase by typing the following into your terminal\n'
+	toString += 'pip3 install --user --upgrade ase\n'
+	toString += '\n'
+	toString += 'This program will exit before beginning'+'\n'
+	toString += '================================================'+'\n'
+	raise ImportError(toString)
+
+# ========================================================================================
+
+import os
+from ase import Atoms, Atom
+from ase.io import read, write
+from ase.calculators.singlepoint import SinglePointCalculator
+from ase.visualize import view
+
+def get_ORCA_IRC_images(path_to_orca_IRC_trj_xyz):
+	"""
+	This method is designed to obtain the images and energies from the ORCA IRC file.
+
+	Parameters
+	----------
+	path_to_orca_IRC_trj_xyz : str.
+		This is the path to the orca IRC trajectory file.
+	"""
+
+	neb_images          = []
+	neb_images_energies = []
+
+	# First: Read the trajectory file
+	with open(path_to_orca_IRC_trj_xyz) as trajectoryFILE:
+
+		# Second: Reset system files
+		new_image = read_title = True
+		system = Atoms()
+
+		# Third: For each line in the ORCA trajectory file
+		for line in trajectoryFILE:
+
+			if new_image:
+				# 3.1: If new image, read the number of atoms expect in the file
+				number_of_atoms = int(line.rstrip())
+				new_image = False
+				read_title = True
+
+			elif read_title:
+				# 3.2: Read the energy from the title
+				energy = float(line.rstrip().split()[-1])
+				read_title = False
+
+			else:
+				# 3.3: Obtain the atom information.
+				symbol, xx, yy, zz = line.rstrip().split()
+				xx = float(xx); yy = float(yy); zz = float(zz); 
+				system.append(Atom(symbol=symbol,position=(xx,yy,zz)))
+
+				if len(system) == number_of_atoms:
+					# 3.4: If you have obtained all the atoms for this traj step:
+
+					# 3.4.1: Save the image and its energy to 
+					neb_images.append(system.copy())
+					neb_images_energies.append(energy)
+
+					# 3.4.2: Reset system files
+					new_image = read_title = True
+					system = Atoms()
+
+				elif len(system) > number_of_atoms:
+					# 3.5: Something weird happened to get to this point.
+					raise Exception('Error: More atoms than should have.')
+
+	# Fourth: Check that all the entries in neb_images_energies are energies
+	if any([(energy is None) for energy in neb_images_energies]):
+		raise Exception('Error: Energy not given')
+
+	return neb_images, neb_images_energies
+
+# ====================================================================================
+
+if __name__ == '__main__':
+
+	# Preamble, get input for view_IRC
+	if   len(sys.argv) == 1:
+		view_IRC = True
+	elif len(sys.argv) == 2:
+		view_IRC = sys.argv[1]
+		if   view_IRC.lower() in ['true', 't']:
+			view_IRC = True
+		elif view_IRC.lower() in ['false', 'f']:
+			view_IRC = False
+		else:
+			raise Exception('Error: Input for viewIRC should be either True or False')
+	else:
+		raise Exception('Error: You can only enter 0 or 1 inputs into viewIRC')
+
+	# First, set the path to extract SCAN data from as the current folder you are in
+	path_to_images = '.'
+
+	# Third, obtain the images and the energies for the whole ORCA NEB process,
+	irc_images, irc_images_energies = get_ORCA_IRC_images(path_to_images+'/'+'orca_IRC_Full_trj.xyz')
+
+	# Fourth, assign energies to the appropriate SCAN image
+	for index, (irc_image, irc_images_energy) in enumerate(zip(irc_images, irc_images_energies)):
+		irc_images[index].calc = SinglePointCalculator(atoms=irc_images[index], energy=irc_images_energy)
+
+	# Fifth, save the SCAN process as an XYZ file
+	write('IRC_images.xyz', irc_images)
+
+	# Sixth, view the SCAN images with energies. 
+	if view_IRC:
+		view(irc_images)
+

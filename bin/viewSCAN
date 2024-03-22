@@ -1,0 +1,293 @@
+#!/usr/bin/env python3
+
+# ========================================================================================
+
+import sys
+import importlib
+import importlib.util
+
+if sys.version_info[0] == 2:
+	toString = ''
+	toString += '\n'
+	toString += '================================================'+'\n'
+	toString += 'This is the EKMC Program'+'\n'
+	toString += 'Version: '+str(__version__)+'\n'
+	toString += '\n'
+	toString += 'The EKMC program requires Python3. You are attempting to execute this program in Python2.'+'\n'
+	toString += 'Make sure you are running the EKMC program in Python3 and try again'+'\n'
+	toString += 'This program will exit before beginning'+'\n'
+	toString += '================================================'+'\n'
+	raise ImportError(toString)
+if sys.version_info[1] < 4:
+	toString = ''
+	toString += '\n'
+	toString += '================================================'+'\n'
+	toString += 'This is the EKMC Program'+'\n'
+	toString += 'Version: '+str(__version__)+'\n'
+	toString += '\n'
+	toString += 'The EKMC program requires Python 3.4 or greater.'+'\n'
+	toString += 'You are using Python '+str('.'.join(sys.version_info))
+	toString += '\n'
+	toString += 'Use a version of Python 3 that is greater or equal to Python 3.4.\n'
+	toString += 'This program will exit before beginning'+'\n'
+	toString += '================================================'+'\n'
+	raise ImportError(toString)
+
+# ----------------------------------------------------------------------------------------
+
+ase_spec = importlib.util.find_spec("ase")
+ase_found = (ase_spec is not None)
+if not ase_found:
+	toString = ''
+	toString += '\n'
+	toString += '================================================'+'\n'
+	toString += 'This is the EKMC Program'+'\n'
+	toString += 'Version: '+str(__version__)+'\n'
+	toString += '\n'
+	toString += 'The EKMC program requires ASE.'+'\n'
+	toString += '\n'
+	toString += 'Install ASE through pip by following the instruction in https://github.com/GardenGroupUO/EKMC'+'\n'
+	toString += 'These instructions will ask you to install ase by typing the following into your terminal\n'
+	toString += 'pip3 install --user --upgrade ase\n'
+	toString += '\n'
+	toString += 'This program will exit before beginning'+'\n'
+	toString += '================================================'+'\n'
+	raise ImportError(toString)	
+
+import ase
+ase_version_minimum = '3.19.0'
+from packaging import version
+#from distutils.version import StrictVersion
+#if StrictVersion(ase.__version__) < StrictVersion(ase_version_minimum):
+if version.parse(ase.__version__) < version.parse(ase_version_minimum):
+	toString = ''
+	toString += '\n'
+	toString += '================================================'+'\n'
+	toString += 'This is the EKMC Program'+'\n'
+	toString += 'Version: '+str(__version__)+'\n'
+	toString += '\n'
+	toString += 'The EKMC program requires ASE greater than or equal to '+str(ase_version_minimum)+'.'+'\n'
+	toString += 'The current version of ASE you are using is '+str(ase.__version__)+'.'+'\n'
+	toString += '\n'
+	toString += 'Install ASE through pip by following the instruction in https://github.com/GardenGroupUO/EKMC'+'\n'
+	toString += 'These instructions will ask you to install ase by typing the following into your terminal\n'
+	toString += 'pip3 install --user --upgrade ase\n'
+	toString += '\n'
+	toString += 'This program will exit before beginning'+'\n'
+	toString += '================================================'+'\n'
+	raise ImportError(toString)
+
+# ========================================================================================
+
+import os
+from ase import Atoms, Atom
+from ase.io import read, write
+from ase.calculators.singlepoint import SinglePointCalculator
+from ase.visualize import view
+
+def get_ORCA_SCAN_images(path_to_images):
+	"""
+	This method is designed to obtain all the images for the SCAN process.
+
+	Parameters
+	----------
+	path_to_images : str.
+		This is the path to the folder containing the SCAN image files. 
+
+	Returns
+	-------
+	Return the images of the SCAN
+	"""
+
+	# First: Initialise a list to hold the SCAN images
+	SCAN_images = []
+
+	# Second: Go though the files in path_to_images and obtain all the image xyz file for the SCAN Job.
+	for filename in os.listdir(path_to_images):
+
+		# 2.1: Check that filename is a file
+		if not os.path.isfile(path_to_images+'/'+filename):
+			continue
+
+		# 2.2: Check that the file is a xyz file
+		if not filename.endswith('.xyz'):
+			continue
+
+		# 2.3: If the second to last component is a three digit number (can start with zeros), this is a ORCA SCAN image.
+		filename_components = filename.split('.')
+		if (not filename_components[-2].isdigit()) or (not len(filename_components) >= 3):
+			continue
+
+		# 2.4: Obtain the component number as an integer
+		component_number = int(filename_components[-2])
+
+		# 2.5: Read the ORCA SCAN image xyz file
+		system = read(path_to_images+'/'+filename)
+
+		# 2.6: Append (component_number, system) to SCAN_images
+		SCAN_images.append( (component_number, system) )
+
+	# Third: Sort SCAN_images by image number
+	SCAN_images.sort()
+
+	# Fourth: Check that the component numbers in SCAN_images are consecutive
+	component_numbers = [component_number for (component_number, system) in SCAN_images]
+	if not (component_numbers == list(range(1,len(component_numbers)+1))):
+		raise Exception('Error')
+
+	# Fifth: Return SCAN_images, but just the ase.Atoms components
+	return [system for (component_number, system) in SCAN_images]
+
+# ====================================================================================
+
+def get_distance(position1, position2):
+	"""
+	This method gives the bond length between two atoms in the molecule. Does not use Minimum Image Convention. 
+
+	Parameters
+	----------
+	position1 : np.array
+		A 1x3 row matrix containing the x, y, and z coordinates of the atom1. Given in Å. 
+	position2 : np.array
+		A 1x3 row matrix containing the x, y, and z coordinates of the atom2. Given in Å. 
+
+	Returns
+	-------
+	float
+		Returns the distance between those atom1 and atom2. Given in Å. 
+		
+	"""
+	return (sum([(p1-p2)**2.0 for p1, p2 in zip(position1,position2)]))**0.5
+
+def compare(image, system):
+	"""
+	This method is designed to check if image and system are the same
+
+	Parameters
+	----------
+	image : ase.Atoms
+		This is the SCAN image. 
+	system : ase.Atoms
+		This is the image in the ORCA trajectory to compare to. This contains the energy of the trajectory step.
+	
+	Returns
+	-------
+		True if image and system are the same. False if not
+	"""
+
+	for image_atom, system_atom in zip(image, system):
+		if not (image_atom.symbol == system_atom.symbol):
+			raise Exception('Error')
+		if not get_distance(image_atom.position, system_atom.position) < 0.00001:
+			return False
+
+	return True
+
+def assign_energies_to_SCAN_images(path_to_orca_trj_xyz, scan_images=[]):
+	"""
+	This method is designed to assign energies from the orca trajectory file to the xyz files for the SCAN images.
+
+	Parameters
+	----------
+	path_to_orca_trj_xyz : str.
+		This is the path to the orca trajectory file.
+	scan_images : list of ase.Atoms
+		These are all the steps in the SCAN trajectory.
+	"""
+
+	scan_images_energies = [None for _ in range(len(scan_images))]
+
+	# First: Read the trajectory file
+	with open(path_to_orca_trj_xyz) as trajectoryFILE:
+
+		# Second: Reset system files
+		new_image = read_title = True
+		system = Atoms()
+
+		# Third: For each line in the ORCA trajectory file
+		for line in trajectoryFILE:
+
+			if new_image:
+				# 3.1: If new image, read the number of atoms expect in the file
+				number_of_atoms = int(line.rstrip())
+				new_image = False
+				read_title = True
+
+			elif read_title:
+				# 3.2: Read the energy from the title
+				energy = float(line.rstrip().split()[-1])
+				read_title = False
+
+			else:
+				# 3.3: Obtain the atom information.
+				symbol, xx, yy, zz = line.rstrip().split()
+				xx = float(xx); yy = float(yy); zz = float(zz); 
+				system.append(Atom(symbol=symbol,position=(xx,yy,zz)))
+
+				if len(system) == number_of_atoms:
+					# 3.4: If you have obtained all the atoms for this traj step:
+
+					# 3.4.1: Compare trajectory step to images in scan_images
+					for index, image in enumerate(scan_images):
+						if compare(image, system):
+							scan_images_energies[index] = energy
+							break
+
+					# 3.4.2: Reset system files
+					new_image = read_title = True
+					system = Atoms()
+
+				elif len(system) > number_of_atoms:
+					# 3.5: Something weird happened to get to this point.
+					raise Exception('Error: More atoms than should have.')
+
+	# Fourth: Check that all the entries in scan_images_energies are energies
+	if any([(energy is None) for energy in scan_images_energies]):
+		raise Exception('Error: Energy not given')
+
+	return scan_images_energies
+
+# ====================================================================================
+
+if __name__ == '__main__':
+
+	# Preamble, get input for view_SCAN
+	if   len(sys.argv) == 1:
+		view_SCAN = True
+	elif len(sys.argv) == 2:
+		view_SCAN = sys.argv[1]
+		if   view_SCAN.lower() in ['true', 't']:
+			view_SCAN = True
+		elif view_SCAN.lower() in ['false', 'f']:
+			view_SCAN = False
+		else:
+			raise Exception('Error: Input for viewSCAN should be either True or False')
+	else:
+		raise Exception('Error: You can only enter 0 or 1 inputs into viewSCAN')
+
+	# First, set the path to extract SCAN data from as the current folder you are in
+	path_to_images = '.'
+
+	# Second, obtain the SCAN images from the folder you are in
+	SCAN_images = get_ORCA_SCAN_images(path_to_images)
+
+	# Third, obtain the energies from the whole ORCA SCAN process (including geometry optimisations) for the SCAN images of interest,
+	scan_images_energies = assign_energies_to_SCAN_images('orca_trj.xyz', scan_images=SCAN_images)
+
+	# Fourth, assign energies to the appropriate SCAN image
+	for index, energy in enumerate(scan_images_energies):
+		SCAN_images[index].calc = SinglePointCalculator(atoms=SCAN_images[index], energy=energy)
+
+	# Fifth, save the SCAN process as an XYZ file
+	write('SCAN_images.xyz',SCAN_images)
+
+	# Sixth, view the SCAN images with energies. 
+	if view_SCAN:
+		view(SCAN_images)
+
+
+
+
+
+
+
