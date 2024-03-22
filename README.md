@@ -215,14 +215,14 @@ END
 First we need to locally optimize the reactants and products. To do this, make a ``Reactant`` folder and a ``Product`` folder, and add to each folder the ``.inp`` file for performing local optimisations. Make sure you include the following into your ``.inp`` files for both the reactant and product:
 
 ```
-!OPT FREQ TightOpt TightSCF defgrid2
+!OPT FREQ TightOPT TightSCF defgrid2
 ```
 
 Here, we perform a geometry optimization to optimize the system. The tags here indicate you want to do the following: 
 
 * ``OPT``: Indicates you want ORCA to perform a local optimisation. 
 * ``FREQ``: Indicates you want ORCA to calculation the vibrational frequency for your molecule. This is used to verify that your optimised structure is indeed a local minimum. This will also give you the Gibbs free energy for your molecule that you (may) want to report as your energy. 
-* ``TightOpt``: Tells ORCA to tighten the convergence criteria for each geometric step. See ORCA 5.0.4 Manual, page 20 for more info.
+* ``TightOPT``: Tells ORCA to tighten the convergence criteria for each geometric step. See ORCA 5.0.4 Manual, page 20 for more info.
 * ``TightSCF``: Tells ORCA to tighten the convergence criteria for each electronic step. 
 * ``defgrid2``: Indicates how fine we want the intergration grid to be (This is the default)
 
@@ -234,7 +234,7 @@ An example of the complete ``orca.inp`` file for a local optimisation ORCA job i
 
 ```orca.inp
 !B3LYP DEF2-TZVP D3BJ 
-!OPT FREQ TIGHTOPT TightSCF defgrid2
+!OPT FREQ TightOPT TightSCF defgrid2
 %SCF
     MaxIter 2000       # Here setting MaxIter to a very high number. Intended for systems that require sometimes 1000 iterations before converging (very rare).
     DIISMaxEq 5        # Default value is 5. A value of 15-40 necessary for difficult systems.
@@ -598,7 +598,7 @@ The full ``orca.inp`` file for this example is given below (found in ``Examples/
 
 ```orca.inp
 !B3LYP DEF2-TZVP D3BJ
-!OptTS NumFreq TIGHTOPT TightSCF defgrid2
+!OptTS NumFreq TightOPT TightSCF defgrid2
 %SCF
     MaxIter 2000       # Here setting MaxIter to a very high number. Intended for systems that require sometimes 1000 iterations before converging (very rare).
     DIISMaxEq 5        # Default value is 5. A value of 15-40 necessary for difficult systems.
@@ -816,9 +816,9 @@ NormalOpt
 TolMAXG 3.e-4  # Max gradient (a.u.). Currently set to values equivalent to NormalOpt.
 TolRMSG 1.e-4  # RMS gradient (a.u.). Currently set to values equivalent to NormalOpt.
 
-TightOpt
-TolMAXG 1.e-4  # Max gradient (a.u.). Currently set to values equivalent to TightOpt.
-TolRMSG 3.e-5  # RMS gradient (a.u.). Currently set to values equivalent to TightOpt.
+TightOPT
+TolMAXG 1.e-4  # Max gradient (a.u.). Currently set to values equivalent to TightOPT.
+TolRMSG 3.e-5  # RMS gradient (a.u.). Currently set to values equivalent to TightOPT.
 
 ```
 
@@ -839,8 +839,8 @@ END
     MaxIter 2000
     InitHess calc_numfreq
     Direction both
-    TolMAXG 1.e-4  # Max gradient (a.u.). Currently set to values equivalent to TightOpt.
-    TolRMSG 3.e-5  # RMS gradient (a.u.). Currently set to values equivalent to TightOpt.
+    TolMAXG 1.e-4  # Max gradient (a.u.). Currently set to values equivalent to TightOPT.
+    TolRMSG 3.e-5  # RMS gradient (a.u.). Currently set to values equivalent to TightOPT.
     PrintLevel 1
 end
 * xyzfile 1 1 TS.xyz
@@ -1138,14 +1138,14 @@ In **Check 4A** we have found the local well that mechanistially connect thought
 To do this, we will repeat **Step 1** for our forwards and backwards molecules. To do this, make a ``Forwards`` folder and a ``Backwards`` folder, and add to each folder the ``.inp`` file for performing local optimisations. Make sure you include the following into your ``.inp`` files for both the forwards and backwards input files:
 
 ```
-!OPT FREQ TightOpt TightSCF defgrid2
+!OPT FREQ TightOPT TightSCF defgrid2
 ```
 
 Here, we perform a geometry optimization to optimize the system. The tags here indicate you want to do the following: 
 
 * ``OPT``: Indicates you want ORCA to perform a local optimisation. 
 * ``FREQ``: Indicates you want ORCA to calculation the vibrational frequency for your molecule. This is used to verify that your optimised structure is indeed a local minimum. This will also give you the Gibbs free energy for your molecule that you (may) want to report as your energy. 
-* ``TightOpt``: Tells ORCA to tighten the convergence criteria for each geometric step. See ORCA 5.0.4 Manual, page 20 for more info.
+* ``TightOPT``: Tells ORCA to tighten the convergence criteria for each geometric step. See ORCA 5.0.4 Manual, page 20 for more info.
 * ``TightSCF``: Tells ORCA to tighten the convergence criteria for each electronic step. 
 * ``defgrid2``: Indicates how fine we want the intergration grid to be (This is the default)
 
@@ -1155,7 +1155,7 @@ An example of the complete ``orca.inp`` file for a local optimisation ORCA job i
 
 ```orca.inp
 !B3LYP DEF2-TZVP D3BJ 
-!OPT FREQ TIGHTOPT TightSCF defgrid2
+!OPT FREQ TightOPT TightSCF defgrid2
 %SCF
     MaxIter 2000       # Here setting MaxIter to a very high number. Intended for systems that require sometimes 1000 iterations before converging (very rare).
     DIISMaxEq 5        # Default value is 5. A value of 15-40 necessary for difficult systems.
