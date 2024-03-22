@@ -224,7 +224,7 @@ Here, we perform a geometry optimization to optimize the system. The tags here i
 * ``FREQ``: Indicates you want ORCA to calculation the vibrational frequency for your molecule. This is used to verify that your optimised structure is indeed a local minimum. This will also give you the Gibbs free energy for your molecule that you (may) want to report as your energy. 
 * ``TightOPT``: Tells ORCA to tighten the convergence criteria for each geometric step. See ORCA 5.0.4 Manual, page 20 for more info.
 * ``TightSCF``: Tells ORCA to tighten the convergence criteria for each electronic step. 
-* ``defgrid2``: Indicates how fine we want the intergration grid to be (This is the default)
+* ``defgrid2``: Indicates how fine we want the intergration grid to be (This is the default).
 
 **NOTE 1**: I have set the electronic optimisation steps to be tight (``TightSCF``). This is just to make sure the electronic are well converged, but it may be overdo. If you have problems, you can try using the normal convergence criteria for the electronic steps (``NormalSCF``)
 
@@ -469,7 +469,7 @@ In this example, we have told ORCA to begin by setting the distance between atom
 
 In this example, we are looking at how a Cu atom could insert itself into a C-H bond. The ``orca.inp`` file for this example is given below (from ``Examples/Step2_Find_TS/SCAN_NormalOPT/orca.inp``):
 
-**NOTE 4**: By default I am use to using ``TightOPT`` for good convergence of the reactants, products, and transition states. However, the SCAN method is just a method for locating the transition state, not finalising a converged state. For this reason, I would recommend using the ``NormalOPT`` convergence settings, as this is fast and allows you to try more variations. If you have problems, try tightening the convergence using ``TightOPT``. 
+**NOTE 4**: I would recommend using the ``NormalOPT`` convergence settings for SCAN calculations. This is because we are using the SCAN method to roughly obtain the transition state structure. ``NormalOPT`` convergence setting is faster than ``TightOPT``, so allows you to try more variations if you run into problems in this state. Also, the  ``NormalOPT`` convergence setting is good, no doubt about it; I am just use to using ``TightOPT``. We will use ``TightOPT`` for the transition state in Step 3. If you have problems, try tightening the convergence using ``TightOPT``. 
 
 ```
 !B3LYP DEF2-TZVP D3BJ
@@ -1366,8 +1366,8 @@ The energy profile for this example is shown below
 ![Energy Profile for this example](Figures/6_Info/Energy_Profile.png)
 
 Here: 
-* The energy from the reactant to transition state is $-1967.01474746 \rm{Eh} - -1967.08223843 \rm{Eh} = 0.06749096999 \rm{Eh}$ which in kJ/mol is $0.06749096999 \rm{Eh} * 2625.5 = 177.2 \rm{kJ/mol}$ (1dp).
-* The energy from the product  to transition state is $-1967.01474746 \rm{Eh} - -1967.03515273 \rm{Eh} = 0.02040526999 \rm{Eh}$ which in kJ/mol is $0.02040526999 \rm{Eh} * 2625.5 = 53.6  \rm{kJ/mol}$ (1dp).
+* The energy from the reactant to transition state is $-1967.01474746 \rm{Eh} - -1967.08223843 \rm{Eh} = 0.06749096999 \rm{Eh}$ which in kJ/mol is $0.06749096999 \rm{Eh} \times 2625.5 = 177.2 \rm{kJ/mol}$ (1dp).
+* The energy from the product  to transition state is $-1967.01474746 \rm{Eh} - -1967.03515273 \rm{Eh} = 0.02040526999 \rm{Eh}$ which in kJ/mol is $0.02040526999 \rm{Eh} \times 2625.5 = 53.6  \rm{kJ/mol}$ (1dp).
 
 So the activation energy for this reaction is 177 kJ/mol. 
 
