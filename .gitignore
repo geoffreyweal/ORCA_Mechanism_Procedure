@@ -268,13 +268,8 @@ dmypy.json
 # Other things to not include
 
 .DS_Store
-Documentation/yml_files
-pushing_to_github.sh
+#pushing_to_github.sh
 .fuse_hidden*
-
-# Dont include files obtained during running of Run.py file
-
-Documentation/build
 
 __pycache__
 git.tar
