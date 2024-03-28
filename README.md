@@ -1371,6 +1371,65 @@ Here:
 
 So the activation energy for this reaction is 177 kJ/mol. 
 
+# Troubleshooting
+
+Some troubleshooting comments that I and others have experience during this procedure are given below.
+
+Also look at the following websites for help:
+
+* https://sites.google.com/site/orcainputlibrary/scf-convergence-issues (apart of https://sites.google.com/site/orcainputlibrary)
+
+## Troubleshooting Geometry Optimisations (``Opt``) Calculations:
+
+### ORCA would not ``converge but reached the maximum number of optimization cycles.``
+
+A common problem that can arise is the message from ORCA saying that it could not converge because it had reached the maximum number of optimization cycles.
+
+```
+    ----------------------------------------------------------------------------
+                                   ERROR !!!
+       The optimization did not converge but reached the maximum
+       number of optimization cycles.
+       As a subsequent Frequencies calculation has been requested
+       ORCA will abort at this point of the run.
+       Please restart the calculation with the lowest energy geometry and/or
+       a larger maxiter for the geometry optimization.
+    ----------------------------------------------------------------------------
+```
+
+This indicates that the electronic step could not converged for the last geoemtric step. This means that ORCA could not find a way to optimise the molecular orbitals for this geoemtric step. This is a very common issue. In this case, you can replace your initial structure with the last optimised structure given by ORCA. Do this by changing the name of the input file in the ``orca.inp`` file from ``reactant.xyz`` to ``orca.xyz``
+
+```bash
+* xyzfile 1 1 orca.xyz 
+```
+
+**However**, before proceeding you should check the initial structure you gave to ORCA. This issue can arises because the initial structure you gave to ORCA was not a good starting point. ORCA requires that you apply your chemical intuition to your system before you run it. Otherwise it can fail. 
+
+For example, consider that we want to optimise the following chemical system, where Cu</sup>+<sup> coordinates to the nitrogen in benzylamine: 
+
+![Optimised Reactant](Figures/Troubleshooting/Opt_Calculations/Electronic_Convergence/reactant_opt.png)
+
+If we wanted to obtain this chemical system, we would want to make sure that most of the atoms are roughly in a good bonding position. This is a good example of a good structure to begin with:
+
+![Initial Structure - Reactant](Figures/Troubleshooting/Opt_Calculations/Electronic_Convergence/reactant.png)
+
+This is an example of a structure that might have convergence issues because the Cu</sup>+<sup> atom is very far away from the nitrogen. Generally, it is best not to combine separate molecules/compounds in an ORCA calculations unless they are well separated and are not meant to come together for geometry optimisations. This does not apply to ``SCAN`` calculations, where you might want to separate two components from each other (For example, separate Cu</sup>+<sup> from benzylamine).
+
+
+## Troubleshooting ``SCAN`` Calculations:
+
+Add troubleshooting comments here when they arrise
+
+
+## Troubleshooting Transition State Geometry Optimisations (``OptTS``) Calculations:
+
+Add troubleshooting comments here when they arrise
+
+
+## Troubleshooting Intrinsic Reaction Coordinate (``IRC``) Calculations:
+
+Add troubleshooting comments here when they arrise
+
 
 
 
