@@ -1412,15 +1412,15 @@ This indicates that the electronic step could not converged for the last geoemtr
 
 For example, consider that we want to optimise the following chemical system, where Cu<sup>+</sup> coordinates to the nitrogen in benzylamine: 
 
-![Optimised Reactant](Figures/Troubleshooting/Opt_Calculations/Electronic_Convergence/reactant_opt.png | width=100)
+<img title='Optimised Reactant' src='Figures/Troubleshooting/Opt_Calculations/Electronic_Convergence/reactant_opt.png' width='25'>
 
 If we wanted to obtain this chemical system, we would want to make sure that most of the atoms are roughly in a good bonding position. This is a good example of a good structure to begin with:
 
-![Initial Structure - Reactant](Figures/Troubleshooting/Opt_Calculations/Electronic_Convergence/reactant.png | width=100)
+<img title='Initial Structure - Reactant' src='Figures/Troubleshooting/Opt_Calculations/Electronic_Convergence/reactant.png' width='25'>
 
 This is an example of a structure that might have convergence issues because the Cu<sup>+</sup> atom is very far away from the nitrogen. Generally, it is best not to combine separate molecules/compounds in an ORCA calculations unless they are well separated and are not meant to come together for geometry optimisations. This does not apply to ``SCAN`` calculations, where you might want to separate two components from each other (For example, separate Cu<sup>+</sup> from benzylamine).
 
-![Initial Structure - Reactant - Not ideal](Figures/Troubleshooting/Opt_Calculations/Electronic_Convergence/bad_reactant_structure.png | width=100)
+<img title='Initial Structure - Reactant - Not ideal' src='Figures/Troubleshooting/Opt_Calculations/Electronic_Convergence/bad_reactant_structure.png' width='25'>
 
 In this case, it would be best to try using a better initial structure where the Cu atom is coordinated to the benzylamine molecule. 
 
