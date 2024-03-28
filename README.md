@@ -1422,6 +1422,8 @@ This is an example of a structure that might have convergence issues because the
 
 ![Initial Structure - Reactant - Not ideal](Figures/Troubleshooting/Opt_Calculations/Electronic_Convergence/bad_reactant_structure.png)
 
+In this case, it would be best to try using a better initial structure where the Cu atom is coordinated to the benzylamine molecule. 
+
 
 ## Troubleshooting ``SCAN`` Calculations:
 
