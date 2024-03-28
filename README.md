@@ -19,6 +19,11 @@ The general steps that we will follow in this procedure are:
 Repeat steps 2-4 until you find the transition state for your mechanism. Sometimes it requires a bit of playing around. 
 
 
+## What to do if I have problems:
+
+Check out the [troubleshooting section here](https://github.com/geoffreyweal/ORCA_Mechanism_Procedure?tab=readme-ov-file#troubleshooting) if you have problems when running through this proceedure.
+
+
 ## Questions and Feedback
 
 I am very keen for feedback about how you find the information in this github page, both the process and the clarity of what I have written. If you have any questions about this process, feed free to write me a message. 
