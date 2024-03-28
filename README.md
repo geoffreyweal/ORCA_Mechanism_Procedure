@@ -434,6 +434,10 @@ Scaling factor for frequencies =  1.000000000  (already applied!)
   53:      3585.59 cm**-1
 ```
 
+### Troubleshooting the geometric optimisation (``Opt``) calculation
+
+See the [troubleshooting section here](https://github.com/geoffreyweal/ORCA_Mechanism_Procedure?tab=readme-ov-file#troubleshooting-geometry-optimisations-opt-calculations) to get help with troubleshooting geometric optimisation calculations.
+
 
 ## Step 2: Perform SCAN or NEB calculation
 
@@ -550,6 +554,10 @@ In this example, I forced the SCAN to gradually decrease the distance between at
 * For example, I could have started with the Cu atom bonded to the N atom, and gradually decrease the distance between atoms 11 (C) and 17 (Cu) to force them to form a bond.
 * I decided to start with Cu inserted into the C-H bond and force the C and H to come together because I thought this was the best way to obtain the transition state for this mechanistic step.
 * It is not uncommon that you need to try a few different SCAN paths to get the transition state you are looking for. 
+
+#### Troubleshooting the ``SCAN`` calculation
+
+See the [troubleshooting section here](https://github.com/geoffreyweal/ORCA_Mechanism_Procedure?tab=readme-ov-file#troubleshooting-scan-calculations) to get help with troubleshooting ``SCAN`` calculations.
 
 #### Other Information about performing SCANs in ORCA
 
@@ -776,6 +784,10 @@ viewOPT False
 * If you just want to create the ``OPT_images.xyz`` file, type into the terminal ``viewOPT False`` (which will create the ``OPT_images.xyz`` file). 
 
 **NOTE 2**: Do not expect the energy to go down. The energy may go up during the geometry optimisation, as we are trying to find a saddlepoint on the potential energy surface rather than a local mininum. 
+
+#### Troubleshooting transition state geometry optimisations (``OptTS``) calculations
+
+See the [troubleshooting section here](https://github.com/geoffreyweal/ORCA_Mechanism_Procedure?tab=readme-ov-file#troubleshooting-transition-state-geometry-optimisations-optts-calculations) to get help with troubleshooting transition state geometry optimisations (``OptTS``)calculations.
 
 #### More Information about optimising transition states with ORCA
 
@@ -1134,6 +1146,10 @@ The energy profile for this example is given below:
 
 If you put the cursor over the energy profile, you will see in this example that the maximum peak occurs at ``x=36``. Because ASE starts at ``0`` rather than ``1``, ``x=36`` here means ``step 37``, so we are happy. 
 
+#### Troubleshooting Intrinsic Reaction Coordinate (``IRC``) calculations
+
+See the [troubleshooting section here](https://github.com/geoffreyweal/ORCA_Mechanism_Procedure?tab=readme-ov-file#troubleshooting-intrinsic-reaction-coordinate-irc-calculations) to get help with troubleshooting Intrinsic Reaction Coordinate (``IRC``) calculations.
+
 #### Other Information about performing the IRC method with ORCA
 
 The following links have good information for performing NEBs in ORCA:
@@ -1342,6 +1358,11 @@ We see that the tightly converged backwards structure from 4B gives a similar st
 One problem however is that the backwards structure from step 4B did not converge. However, as we have mentioned this structure is very similar to the optimised reactant structure in step 1. 
 * We could retry this calculation from the last geometric step from step 4B, as it is common that ORCA will fail for various reason and restarting ORCA sorts everything out
 * However, because the backwards structure we got from step 4B is pretty much the same as the optimised reactant from step 1, I would be pragmatic and be happy that step 4B backwards gave us the result we were looking for. 
+
+### Troubleshooting the geometric optimisation (``Opt``) calculation
+
+See the [troubleshooting section here](https://github.com/geoffreyweal/ORCA_Mechanism_Procedure?tab=readme-ov-file#troubleshooting-geometry-optimisations-opt-calculations) to get help with troubleshooting geometric optimisation calculations.
+
 
 ## Step 5: Check that you are happy
 
