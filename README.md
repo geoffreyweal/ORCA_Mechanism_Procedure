@@ -1410,7 +1410,7 @@ This indicates that the electronic step could not converged for the last geoemtr
 
 **However**, before proceeding you should check the initial structure you gave to ORCA. This issue can arises because the initial structure you gave to ORCA was not a good starting point. ORCA requires that you apply your chemical intuition to your system before you run it. Otherwise it can fail. 
 
-For example, consider that we want to optimise the following chemical system, where Cu</sup>+<sup> coordinates to the nitrogen in benzylamine: 
+For example, consider that we want to optimise the following chemical system, where Cu<sup>+</sup> coordinates to the nitrogen in benzylamine: 
 
 ![Optimised Reactant](Figures/Troubleshooting/Opt_Calculations/Electronic_Convergence/reactant_opt.png)
 
@@ -1418,7 +1418,7 @@ If we wanted to obtain this chemical system, we would want to make sure that mos
 
 ![Initial Structure - Reactant](Figures/Troubleshooting/Opt_Calculations/Electronic_Convergence/reactant.png)
 
-This is an example of a structure that might have convergence issues because the Cu</sup>+<sup> atom is very far away from the nitrogen. Generally, it is best not to combine separate molecules/compounds in an ORCA calculations unless they are well separated and are not meant to come together for geometry optimisations. This does not apply to ``SCAN`` calculations, where you might want to separate two components from each other (For example, separate Cu</sup>+<sup> from benzylamine).
+This is an example of a structure that might have convergence issues because the Cu<sup>+</sup> atom is very far away from the nitrogen. Generally, it is best not to combine separate molecules/compounds in an ORCA calculations unless they are well separated and are not meant to come together for geometry optimisations. This does not apply to ``SCAN`` calculations, where you might want to separate two components from each other (For example, separate Cu<sup>+</sup> from benzylamine).
 
 
 ## Troubleshooting ``SCAN`` Calculations:
