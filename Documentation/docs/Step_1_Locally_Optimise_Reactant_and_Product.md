@@ -144,7 +144,7 @@ Here, you want to **check that the molecule looks ok from your chemical and phys
 
 You want to look for a table in the [``output.out`` file](https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/Examples/Step1_Geo_Opt/Products/output.out#L17079) for a table with the title ``Geometry convergence``. There will be many of these tables, as one is given for each geometric step performed. 
 
-* **You want to look at the last ``Geometry convergence`` table in the output file** as this will display the information for the latest geometrically optimised step. An example for the ``Products`` is given below:
+* **You want to look at the [last ``Geometry convergence`` table](https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/Examples/Step1_Geo_Opt/Products/output.out#L17079) in the output file** as this will display the information for the latest geometrically optimised step. An example for the ``Products`` is given below:
 
 ```title="Extract of geometry convergence information from the ORCA output file"
                                 .--------------------.
@@ -180,7 +180,7 @@ After performing a local optimisation, it is important that you look at the vibr
 
 * If one or more frequency is negative, this means we are not in a local minimum. In this case, you need to tighten the optimisation, or need to look at your molecule and see if any part of it structurally does not make sense with your chemical intuition. 
 
-In the example below (for ``Products``), you can see that there are no non-negative frequencies from the ``FREQ`` calculation, therefore we are in a local energy well: 
+In the [example below (for ``Products``)](https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/Examples/Step1_Geo_Opt/Products/output.out#L18756), you can see that there are no non-negative frequencies from the ``FREQ`` calculation, therefore we are in a local energy well: 
 
 ```title="Extract of vibrational frequency information from the ORCA output file"
 -----------------------
