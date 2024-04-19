@@ -127,7 +127,7 @@ In this example, you can see that the majority of the items of interest have con
 
 After performing a local optimization, it is important that you look at the vibrational frequencies that were calculated in the [ORCA output file](https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/Examples/Step4B_Validate_Forwards_and_Backwards/Forwards/output.out#L14172). These are the frequencies that you could see in an IR or Raman spectra. You want to look through your ``.out`` file for a heading called ``VIBRATIONAL FREQUENCIES``. **We want to make sure that all the frequencies are non-negative**. This means we are in a local energy well. If one or more frequency is negative, this means we are not in a local minimum. In this case, you need to tighten the optimization, or need to look at your molecule and see if any part of it structurally does not make sense with your chemical intuition. 
 
-In the example below (for ``Forwards``), you can see that there are no non-negative frequencies from the ``FREQ`` calculation, therefore we are in a local energy well: 
+In the [example below (for ``Forwards``)](https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/Examples/Step4B_Validate_Forwards_and_Backwards/Forwards/output.out#L14172), you can see that there are no non-negative frequencies from the ``FREQ`` calculation, therefore we are in a local energy well: 
 
 ```
 -----------------------

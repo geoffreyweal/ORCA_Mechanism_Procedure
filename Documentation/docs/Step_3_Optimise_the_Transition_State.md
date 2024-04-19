@@ -137,13 +137,13 @@ Just like when we were [checking convergence of the product and reactant in Step
 
 ### Check 3: Check that we have only 1 negative vibrational frequency
 
-We want to look at the frequency calculation results from the [ORCA output file](https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/Examples/Step3_Opt_TS/output.out#L1924) and check that there is only 1 negative frequency. This tells us that we are on a saddlepoint on the potential energy landscape.
+We want to look at the frequency calculation results from the [ORCA output file](https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/Examples/Step3_Opt_TS/output.out#L5989) and check that there is only 1 negative frequency. This tells us that we are on a saddlepoint on the potential energy landscape.
 
 * Generally any negative frequency is good, but a negative frequency that is greater than $-100cm^{-1}$ is a good sign that the transition state is good. 
     * This is because the value of the frequency indicates the curvative of the transition state across the saddlepoint. The bigger the number, the steeper the energy decent on each side of the saddlepoint.
 * A negative frequency between $-20cm^{-1}$ and $-100cm^{-1}$ is fine, but just beware you may have problems with [Step 4](Step_4_Validate_TS/index.md) for technical reasons.
 
-[In the example below](https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/Examples/Step3_Opt_TS/output.out#L1924), you can see we only have one negative vibrational frequency, so our transition state is good to go!
+[In the example below](https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/Examples/Step3_Opt_TS/output.out#L5989), you can see we only have one negative vibrational frequency, so our transition state is good to go!
 
 ```title="Extract of vibrational frequency information from the ORCA output file"
 -----------------------
