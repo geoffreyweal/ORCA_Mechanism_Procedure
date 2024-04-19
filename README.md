@@ -49,7 +49,7 @@ This procedure using the ``viewORCA`` program to help visualise the calculations
 
 ### The ``viewORCA`` Manual
 
-The ``viewORCA`` is used throughout this tutorial and with examples of how to use it are given. However, for a quick reference to how to use the various functions of ``viewORCA``, see [the ``viewORCA`` Manual here](https://geoffreyweal.github.io/ORCA_Mechanism_Procedure/viewORCA.md).
+The ``viewORCA`` is used throughout this tutorial and with examples of how to use it are given. However, for a quick reference to how to use the various functions of ``viewORCA``, see [the ``viewORCA`` Manual here](https://geoffreyweal.github.io/ORCA_Mechanism_Procedure/viewORCA_Manual).
 
 
 ## ORCA Templates 
