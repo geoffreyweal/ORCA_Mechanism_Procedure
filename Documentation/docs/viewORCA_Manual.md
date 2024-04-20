@@ -1,6 +1,9 @@
 # ``viewORCA`` Manual
 
-The ``viewORCA`` program is designed to allow the user to view ORCA calculations. To install ``viewORCA``, see the [viewORCA installation webpage](Programs_to_Install.md#the-vieworca-program). 
+The ``viewORCA`` program is designed to allow the user to view ORCA calculations. 
+
+* To install ``viewORCA``, see the [viewORCA installation webpage](Programs_to_Install.md#the-vieworca-program). 
+* You can see the Github repository here](https://github.com/geoffreyweal/viewORCA).
 
 Run ``viewORCA`` by typing ``viewORCA`` into the terminal
 

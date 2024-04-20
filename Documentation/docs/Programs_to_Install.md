@@ -11,7 +11,7 @@ It is a good idea to have a notepad program for reading and editing files easily
 
 ## The ``viewORCA`` Program
 
-The ``viewORCA`` program is used throughout this procedure to allow the user to view various ORCA calculations. To install ``viewORCA`` program in your computer, install the pre-requisite programs before installing ``viewORCA`` as given in the following instructions: 
+The ``viewORCA`` program ([see the Github repository here](https://github.com/geoffreyweal/viewORCA)) is used throughout this procedure to allow the user to view various ORCA calculations. To install ``viewORCA`` program in your computer, install the pre-requisite programs before installing ``viewORCA`` as given in the following instructions: 
 
 ### Pre-requisites
 
@@ -197,13 +197,32 @@ pip3 install --upgrade --user -i https://test.pypi.org/simple/ viewORCA==0.1.0
 
 The website for ``viewORCA`` on ``pip3`` can be found by [clicking here](https://test.pypi.org/project/viewORCA/).
 
+!!! tip
+
+    This is the recommended way of installing ``viewORCA`` on your computer.
 
 #### Install ACSD through ``conda``
 
 You can install the ``viewORCA`` program on ``conda`` through ``pip``. [Click here](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html#installing-non-conda-packages) to see more information about installing ``viewORCA`` through ``conda``.
 
-<!-- 
-#### Manual Installation
+
+#### Install Development Version of ``viewORCA``
+
+If you would like to test the development version of ``viewORCA`` from Github, there are two ways to do this:
+
+!!! warning
+
+    This is not recommended as this version of ``viewORCA`` may be unstable. 
+
+##### 1. Install ``viewORCA`` from Github through ``pip3``
+
+You can install ``viewORCA`` from Github through ``pip3`` by performing the following in your terminal.
+
+```bash
+pip3 install --upgrade --user git+https://github.com/geoffreyweal/viewORCA.git
+```
+
+##### 1. Install ``viewORCA`` Manually from Github
 
 To install the ``viewORCA`` program manually onto your computer, do the following:
 
@@ -284,4 +303,4 @@ To install the ``viewORCA`` program manually onto your computer, do the followin
 
         ```bash
         /usr/bin/which: no viewORCA in ...
-        ``` -->
+        ```
