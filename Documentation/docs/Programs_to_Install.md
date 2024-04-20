@@ -222,7 +222,7 @@ You can install ``viewORCA`` from Github through ``pip3`` by performing the foll
 pip3 install --upgrade --user git+https://github.com/geoffreyweal/viewORCA.git
 ```
 
-##### 1. Install ``viewORCA`` Manually from Github
+##### 2. Install ``viewORCA`` Manually from Github
 
 To install the ``viewORCA`` program manually onto your computer, do the following:
 
