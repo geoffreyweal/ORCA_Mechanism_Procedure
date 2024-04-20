@@ -8,7 +8,7 @@ END
 %CPCM EPSILON 6.02 REFRAC 1.3723 END
 %PAL NPROCS 32 END
 %maxcore 2000
-%geom 
+%GEOM 
     SCAN B 11 14 = 3.242, 0.742, 126 END 
 END
 * xyzfile 1 1 opt_product.xyz

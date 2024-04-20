@@ -1,5 +1,5 @@
 !B3LYP DEF2-TZVP D3BJ
-!NEB-TS FREQ TightOPT TightSCF defgrid2
+!NEB-TS FREQ TightSCF defgrid2
 %SCF
     MaxIter 2000       # Here setting MaxIter to a very high number. Intended for systems that require sometimes 1000 iterations before converging (very rare).
     DIISMaxEq 5        # Default value is 5. A value of 15-40 necessary for difficult systems.

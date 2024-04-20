@@ -33,7 +33,7 @@ The tags here indicate you want to do the following:
 We also include the following lines:
 
 ```title="Extra lines required for a SCAN calculation"
-%geom 
+%GEOM 
     SCAN B atom_index_1 atom_index_2 = initial_distance, final_distance, linspace+1 END 
 END
 ```
@@ -49,7 +49,7 @@ where:
 An example for these lines is given below:
 
 ```title="Extra lines required for a SCAN calculation"
-%geom 
+%GEOM 
     SCAN B 11 14 = 3.242, 0.742, 126 END 
 END
 ```
@@ -85,7 +85,7 @@ END
 %CPCM EPSILON 6.02 REFRAC 1.3723 END
 %PAL NPROCS 32 END
 %maxcore 2000
-%geom 
+%GEOM 
     SCAN B 11 14 = 3.242, 0.742, 126 END 
 END
 * xyzfile 1 1 opt_product.xyz
@@ -168,7 +168,107 @@ In this example, I forced the SCAN to gradually decrease the distance between at
 * It is not uncommon that you need to try a few different SCAN paths to get the transition state you are looking for. 
 
 
-## Other Information about performing ``SCAN`` calculations in ORCA
+## What should I do if I need to restart a SCAN run
+
+Sometimes a SCAN job may fail. However, rather than resetting the SCAN job from beginning, you may want your SCAN job to resume from the last converged SCAN image. 
+
+If you want to restart the SCAN job from the last converged image, here is a guide to how to do this:
+
+1. **If you are restarting your SCAN job for the first time**: Make a new folder called ``SCAN_1``, and move all your SCAN files into this folder. Do this by running the lines below in your terminal:
+
+    ```bash title="Make a new SCAN folder and place all SCAN files into it"
+    mkdir SCAN_1
+    mv -v * SCAN_1
+    ```
+
+    !!! note
+
+        You will see a message like this when you run the ``mv -v * SCAN_1`` command. 
+
+        ```bash
+        mv: cannot move ‘SCAN_1’ to a subdirectory of itself, ‘SCAN_1/SCAN_1’
+        ```
+
+        This is normal and expected. Ignore this issue. 
+
+2. Make a new folder called ``SCAN_2``:
+
+    ```bash title="Make a new SCAN folder"
+    mkdir SCAN_2
+    ```
+
+3. Copy the ORCA input file, slurm submit file, and the last converged SCAN xyz file. This is the latest numbered xyz file. An example of this is given below:
+
+    ```bash title="Copy SCAN file from the previous SCAN job over to the new SCAN folder"
+    cp -rv SCAN_1/orca.inp     SCAN_2/orca.inp
+    cp -rv SCAN_1/submit.sl    SCAN_2/submit.sl
+    cp -rv SCAN_1/orca.059.xyz SCAN_2/orca.059.xyz
+    ```
+
+4. Change directory into the new SCAN folder, then change the name of the last converged SCAN xyz file to another name, such as ``last_converged_SCAN_image_restart.xyz``
+
+    ```bash title="Copy SCAN file from the previous SCAN job over to the new SCAN folder"
+    cd SCAN_2
+    mv orca.059.xyz last_converged_SCAN_image_restart.xyz
+    ```
+
+5. Open the copied ``orca.inp`` file, and make two changes to this file
+
+    1. Change the name of the xyz file give in in the ``xyzfile`` line to ``last_converged_SCAN_image_restart.xyz``
+
+        ```
+        * xyzfile 1 1 last_converged_SCAN_image_restart.xyz
+        ```
+
+    2. In the ``GEOM`` section: 
+
+        * Change the bond distance between the two atoms of interest as given in ``last_converged_SCAN_image_restart.xyz``. Get this by measuring the distance between the two atoms of interest in ``ase gui last_converged_SCAN_image_restart.xyz``
+        * Change the number of SCAN iterations to perform in order to keep displacement between SCAN images the same. For example, here the original displacement was $\frac{\rm{d_f} - \rm{d_i}}{(\rm{no.\:SCAN\:interations})-1} = \frac{3.242 - 0.742}{126-1} = 0.02$. The distance between atoms 11 and 14 in ``last_converged_SCAN_image_restart.xyz`` is ``2.082 Å``. Therefore, we need to perform $\frac{d_f(\rm{new}) - d_i}{\rm{displacement}}+1 = \frac{2.082 - 0.742}{0.02}+1 = 68$ (The $+1$ is so we include the initial image in the SCAN procedure).
+
+        An examples of the two components of ``GEOM`` that need to be changed are given below
+
+        ```
+        %GEOM
+            SCAN B 11 14 = new_initial_distance, 0.742, no_of_SCAN_iterations END
+        END
+        ```
+        
+        For example:
+
+        ```
+        %GEOM
+            SCAN B 11 14 = 2.082, 0.742, 68 END
+        END
+        ```
+
+    An example of the updated ``orca.inp`` file is shown below
+
+    ```title="Example of the orca.inp file for the updated SCAN job"
+    !B3LYP DEF2-TZVP D3BJ
+    !OPT NormalOPT TightSCF defgrid2 # Try TightOPT if you have convergence problems.
+    %SCF
+        MaxIter 2000       # Here setting MaxIter to a very high number. Intended for systems that require sometimes 1000 iterations before converging (very rare).
+        DIISMaxEq 5        # Default value is 5. A value of 15-40 necessary for difficult systems.
+        directresetfreq 15 # Default value is 15. A value of 1 (very expensive) is sometimes required. A value between 1 and 15 may be more cost-effective.
+    END
+    %CPCM EPSILON 6.02 REFRAC 1.3723 END
+    %PAL NPROCS 32 END
+    %maxcore 2000
+    %GEOM
+        SCAN B 11 14 = 2.082, 0.742, 68 END
+    END
+    * xyzfile 1 1 last_converged_SCAN_image_restart.xyz
+    ```
+    
+6. Submit your ORCA job to slurm, or run your ORCA job however you usually run ORCA. 
+
+Once your SCAN job has completed to your satisfaction, you can use ``viewORCA scan`` to view all your SCAN runs together. To do this, run ``viewORCA scan`` in the folder containing your ``SCAN_1``, ``SCAN_2``, ``SCAN_3``, ... folder. ``viewORCA scan`` will collate all the SCAN jobs together in numerical order so that it looks as if only one SCAN job ran.
+
+!!! tip 
+
+    ``viewORCA scan`` will also still create a ``SCAN_images.xyz`` file, containing the SCANs from all your SCAN folders pasted together. 
+
+## Other information about performing ``SCAN`` calculations in ORCA
 
 [Click here](https://sites.google.com/site/orcainputlibrary/geometry-optimizations/tutorial-saddlepoint-ts-optimization-via-relaxed-scan) to learn more about SCAN calculations from the ORCA Input Library.
 

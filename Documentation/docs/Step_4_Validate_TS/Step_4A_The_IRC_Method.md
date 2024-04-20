@@ -20,7 +20,7 @@ We also want to include the following options for the IRC method:
     TolMAXG 2.e-3  # Max gradient (a.u.). Currently set to values equivalent to LooseOpt.
     TolRMSG 5.e-4  # RMS gradient (a.u.). Currently set to values equivalent to LooseOpt.
     PrintLevel 1
-end
+END
 ```
 
 !!! note "Notes about the ``TolMAXG`` and ``TolRMSG`` keywords"
@@ -66,7 +66,7 @@ END
     TolMAXG 1.e-4  # Max gradient (a.u.). Currently set to values equivalent to TightOPT.
     TolRMSG 3.e-5  # RMS gradient (a.u.). Currently set to values equivalent to TightOPT.
     PrintLevel 1
-end
+END
 * xyzfile 1 1 TS.xyz
 
 ```

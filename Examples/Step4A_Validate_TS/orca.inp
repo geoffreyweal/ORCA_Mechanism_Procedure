@@ -13,6 +13,6 @@ END
     InitHess calc_numfreq
     Direction both
     PrintLevel 1
-end
+END
 * xyzfile 1 1 TS.xyz
 
