@@ -1,0 +1,183 @@
+# Project information
+site_name: Procedure for Investigating Reaction Mechanisms in ORCA
+site_url: https://github.com/geoffreyweal/ORCA_Mechanism_Procedure
+site_author: Geoffrey Weal
+site_description: >-
+  The procedure for investigating chemical mechanisms in ORCA is described here
+
+# Repository
+repo_name: geoffreyweal/ORCA_Mechanism_Procedure
+repo_url: https://github.com/geoffreyweal/ORCA_Mechanism_Procedure
+
+# Copyright
+copyright: Copyright &copy; 2024 <a href="https://github.com/geoffreyweal"  target="_blank" rel="noopener">Geoffrey Weal</a>
+
+# Configuration
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - navigation.top
+    - navigation.tracking
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+    - content.code.select
+    #- content.action.edit
+    #- content.action.view
+    - navigation.footer
+    - content.tooltips
+    #- announce.dismiss
+    #- content.code.annotate
+    # - content.code.select
+    # - content.footnote.tooltips
+    # - content.tabs.link
+    # - header.autohide
+    #- navigation.expand
+    - navigation.indexes
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+    # - navigation.prune
+    # - navigation.tabs.sticky
+    #- navigation.tracking
+    #- search.share
+    - toc.follow
+    # - toc.integrate
+  language: en
+  palette:
+
+    # Palette toggle for light/dark mode system perference
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/lightbulb-multiple-outline
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      primary: green
+      accent:  green
+      toggle:
+        icon: material/lightbulb
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme:  slate
+      primary: black
+      accent:  green
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to system preference
+  font:
+    text: Roboto
+    code: Roboto Mono
+  #favicon: assets/favicon.png
+  icon:
+    logo: logo
+
+plugins:
+  - social
+  - search
+  - img2fig
+
+# Additional configuration
+extra:
+  social:
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/geoffreyweal
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/vieworca
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/geoffreyweal
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/geoffrey-weal-905725196
+    - icon: fontawesome/brands/orcid
+      link: https://orcid.org/0000-0002-3477-160X
+
+# Extensions
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      normalize_issue_symbols: true
+      repo_url_shorthand: true
+      user: geoffreyweal
+      repo: mkdocs-material
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      auto_append:
+        - includes/mkdocs.md
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  #- https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML
+
+# extra_javascript:
+#   - javascripts/katex.js
+#   - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js
+#   - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/contrib/auto-render.min.js
+
+# extra_css:
+#   - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css
+
+# Page tree
+nav:
+  - Home: index.md
+  - Programs to Install: Programs_to_Install.md
+  - Investigate: Investigating_Mechanisms.md
+  - Before You Begin: Before_You_Begin.md
+  - 1. Optimise R and P: Step_1_Locally_Optimise_Reactant_and_Product.md
+  - 2. Examine Pathway: 
+    - Step_2_Examine_Reaction_Pathway/index.md
+    - Step 2A - SCAN: Step_2_Examine_Reaction_Pathway/Step_2A_The_SCAN_Method.md
+    - Step 2B - NEB: Step_2_Examine_Reaction_Pathway/Step_2B_The_NEB_Method.md
+  - 3. Optimise TS: Step_3_Optimise_the_Transition_State.md
+  - 4. Validate TS: 
+    - Step_4_Validate_TS/index.md
+    - Step 4A - The IRC Method: Step_4_Validate_TS/Step_4A_The_IRC_Method.md
+    - Step 4B - Optimise the Forward and Backwards States: Step_4_Validate_TS/Step_4B_Local_Optimisation.md
+  - 5. Compile Results: Step_5_Compile_Results.md
+  - viewORCA Manual: https://geoffreyweal.github.io/viewORCA/viewORCA_Manual
