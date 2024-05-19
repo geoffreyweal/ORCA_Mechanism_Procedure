@@ -1,0 +1,14 @@
+!B3LYP DEF2-TZVP D3BJ
+!OPT NormalOPT TightSCF defgrid2 # Try TightOPT if you have convergence problems. 
+%SCF
+    MaxIter 2000       # Here setting MaxIter to a very high number. Intended for systems that require sometimes 1000 iterations before converging (very rare).
+    DIISMaxEq 5        # Default value is 5. A value of 15-40 necessary for difficult systems.
+    directresetfreq 15 # Default value is 15. A value of 1 (very expensive) is sometimes required. A value between 1 and 15 may be more cost-effective.
+END
+%CPCM EPSILON 6.02 REFRAC 1.3723 END
+%PAL NPROCS 32 END
+%maxcore 2000
+%GEOM 
+    SCAN B 11 14 = 3.242, 0.742, 126 END 
+END
+* xyzfile 1 1 opt_product.xyz

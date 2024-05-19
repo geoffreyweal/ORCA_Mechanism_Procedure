@@ -1,0 +1,766 @@
+
+                                 *****************
+                                 * O   R   C   A *
+                                 *****************
+
+                                            #,                                       
+                                            ###                                      
+                                            ####                                     
+                                            #####                                    
+                                            ######                                   
+                                           ########,                                 
+                                     ,,################,,,,,                         
+                               ,,#################################,,                 
+                          ,,##########################################,,             
+                       ,#########################################, ''#####,          
+                    ,#############################################,,   '####,        
+                  ,##################################################,,,,####,       
+                ,###########''''           ''''###############################       
+              ,#####''   ,,,,##########,,,,          '''####'''          '####       
+            ,##' ,,,,###########################,,,                        '##       
+           ' ,,###''''                  '''############,,,                           
+         ,,##''                                '''############,,,,        ,,,,,,###''
+      ,#''                                            '''#######################'''  
+     '                                                          ''''####''''         
+             ,#######,   #######,   ,#######,      ##                                
+            ,#'     '#,  ##    ##  ,#'     '#,    #''#        ######   ,####,        
+            ##       ##  ##   ,#'  ##            #'  '#       #        #'  '#        
+            ##       ##  #######   ##           ,######,      #####,   #    #        
+            '#,     ,#'  ##    ##  '#,     ,#' ,#      #,         ##   #,  ,#        
+             '#######'   ##     ##  '#######'  #'      '#     #####' # '####'        
+
+
+
+                  #######################################################
+                  #                        -***-                        #
+                  #          Department of theory and spectroscopy      #
+                  #    Directorship and core code : Frank Neese         #
+                  #        Max Planck Institute fuer Kohlenforschung    #
+                  #                Kaiser Wilhelm Platz 1               #
+                  #                 D-45470 Muelheim/Ruhr               #
+                  #                      Germany                        #
+                  #                                                     #
+                  #                  All rights reserved                #
+                  #                        -***-                        #
+                  #######################################################
+
+
+                         Program Version 5.0.3 -  RELEASE  -
+
+
+ With contributions from (in alphabetic order):
+   Daniel Aravena         : Magnetic Suceptibility
+   Michael Atanasov       : Ab Initio Ligand Field Theory (pilot matlab implementation)
+   Alexander A. Auer      : GIAO ZORA, VPT2 properties, NMR spectrum
+   Ute Becker             : Parallelization
+   Giovanni Bistoni       : ED, misc. LED, open-shell LED, HFLD
+   Martin Brehm           : Molecular dynamics
+   Dmytro Bykov           : SCF Hessian
+   Vijay G. Chilkuri      : MRCI spin determinant printing, contributions to CSF-ICE
+   Dipayan Datta          : RHF DLPNO-CCSD density
+   Achintya Kumar Dutta   : EOM-CC, STEOM-CC
+   Dmitry Ganyushin       : Spin-Orbit,Spin-Spin,Magnetic field MRCI
+   Miquel Garcia          : C-PCM and meta-GGA Hessian, CC/C-PCM, Gaussian charge scheme
+   Yang Guo               : DLPNO-NEVPT2, F12-NEVPT2, CIM, IAO-localization
+   Andreas Hansen         : Spin unrestricted coupled pair/coupled cluster methods
+   Benjamin Helmich-Paris : MC-RPA, TRAH-SCF, COSX integrals
+   Lee Huntington         : MR-EOM, pCC
+   Robert Izsak           : Overlap fitted RIJCOSX, COSX-SCS-MP3, EOM
+   Marcus Kettner         : VPT2
+   Christian Kollmar      : KDIIS, OOCD, Brueckner-CCSD(T), CCSD density, CASPT2, CASPT2-K
+   Simone Kossmann        : Meta GGA functionals, TD-DFT gradient, OOMP2, MP2 Hessian
+   Martin Krupicka        : Initial AUTO-CI
+   Lucas Lang             : DCDCAS
+   Marvin Lechner         : AUTO-CI (C++ implementation), FIC-MRCC
+   Dagmar Lenk            : GEPOL surface, SMD
+   Dimitrios Liakos       : Extrapolation schemes; Compound Job, initial MDCI parallelization
+   Dimitrios Manganas     : Further ROCIS development; embedding schemes
+   Dimitrios Pantazis     : SARC Basis sets
+   Anastasios Papadopoulos: AUTO-CI, single reference methods and gradients
+   Taras Petrenko         : DFT Hessian,TD-DFT gradient, ASA, ECA, R-Raman, ABS, FL, XAS/XES, NRVS
+   Peter Pinski           : DLPNO-MP2, DLPNO-MP2 Gradient
+   Christoph Reimann      : Effective Core Potentials
+   Marius Retegan         : Local ZFS, SOC
+   Christoph Riplinger    : Optimizer, TS searches, QM/MM, DLPNO-CCSD(T), (RO)-DLPNO pert. Triples
+   Tobias Risthaus        : Range-separated hybrids, TD-DFT gradient, RPA, STAB
+   Michael Roemelt        : Original ROCIS implementation
+   Masaaki Saitow         : Open-shell DLPNO-CCSD energy and density
+   Barbara Sandhoefer     : DKH picture change effects
+   Avijit Sen             : IP-ROCIS
+   Kantharuban Sivalingam : CASSCF convergence, NEVPT2, FIC-MRCI
+   Bernardo de Souza      : ESD, SOC TD-DFT
+   Georgi Stoychev        : AutoAux, RI-MP2 NMR, DLPNO-MP2 response
+   Willem Van den Heuvel  : Paramagnetic NMR
+   Boris Wezisla          : Elementary symmetry handling
+   Frank Wennmohs         : Technical directorship
+
+
+ We gratefully acknowledge several colleagues who have allowed us to
+ interface, adapt or use parts of their codes:
+   Stefan Grimme, W. Hujo, H. Kruse, P. Pracht,  : VdW corrections, initial TS optimization,
+                  C. Bannwarth, S. Ehlert          DFT functionals, gCP, sTDA/sTD-DF
+   Ed Valeev, F. Pavosevic, A. Kumar             : LibInt (2-el integral package), F12 methods
+   Garnet Chan, S. Sharma, J. Yang, R. Olivares  : DMRG
+   Ulf Ekstrom                                   : XCFun DFT Library
+   Mihaly Kallay                                 : mrcc  (arbitrary order and MRCC methods)
+   Jiri Pittner, Ondrej Demel                    : Mk-CCSD
+   Frank Weinhold                                : gennbo (NPA and NBO analysis)
+   Christopher J. Cramer and Donald G. Truhlar   : smd solvation model
+   Lars Goerigk                                  : TD-DFT with DH, B97 family of functionals
+   V. Asgeirsson, H. Jonsson                     : NEB implementation
+   FAccTs GmbH                                   : IRC, NEB, NEB-TS, DLPNO-Multilevel, CI-OPT
+                                                   MM, QMMM, 2- and 3-layer-ONIOM, Crystal-QMMM,
+                                                   LR-CPCM, SF, NACMEs, symmetry and pop. for TD-DFT,
+                                                   nearIR, NL-DFT gradient (VV10), updates on ESD,
+                                                   ML-optimized integration grids
+   S Lehtola, MJT Oliveira, MAL Marques          : LibXC Library
+   Liviu Ungur et al                             : ANISO software
+
+
+ Your calculation uses the libint2 library for the computation of 2-el integrals
+ For citations please refer to: http://libint.valeyev.net
+
+ Your ORCA version has been built with support for libXC version: 5.1.0
+ For citations please refer to: https://tddft.org/programs/libxc/
+
+ This ORCA versions uses:
+   CBLAS   interface :  Fast vector & matrix operations
+   LAPACKE interface :  Fast linear algebra routines
+   SCALAPACK package :  Parallel linear algebra routines
+   Shared memory     :  Shared parallel matrices
+   BLAS/LAPACK       :  OpenBLAS 0.3.15  USE64BITINT DYNAMIC_ARCH NO_AFFINITY Haswell SINGLE_THREADED
+        Core in use  :  Haswell
+   Copyright (c) 2011-2014, The OpenBLAS Project
+
+
+
+
+***************************************
+The coordinates will be read from file: reactant_opt_unconstrained.xyz
+***************************************
+
+
+Your calculation utilizes the atom-pairwise dispersion correction
+with the Becke-Johnson damping scheme (D3BJ)
+Cite in your paper:
+S.Grimme, S.Ehrlich, L.Goerigk, J Comput Chem, (2011), 32, 1456–1465 
+S.Grimme, J.Antony, S.Ehrlich and H.Krieg, J.Chem.Phys., 132, (2010), 154104 
+   
+
+Your calculation utilizes a Nudged-Elastic-Band implementation
+ by V.Asgeirsson, C. Riplinger & H. Jonsson
+Please cite in your paper:
+ V. Asgeirsson et al., in prep. (2019)
+   
+
+================================================================================
+
+----- Orbital basis set information -----
+Your calculation utilizes the basis: def2-TZVP
+   F. Weigend and R. Ahlrichs, Phys. Chem. Chem. Phys. 7, 3297 (2005).
+
+----- AuxJ basis set information -----
+Your calculation utilizes the auxiliary basis: def2/J
+   F. Weigend, Phys. Chem. Chem. Phys. 8, 1057 (2006).
+
+================================================================================
+                                        WARNINGS
+                       Please study these warnings very carefully!
+================================================================================
+
+
+WARNING: Geometry Optimization
+  ===> : Switching off AutoStart
+         For restart on a previous wavefunction, please use MOREAD
+
+INFO   : the flag for use of the SHARK integral package has been found!
+
+================================================================================
+                                       INPUT FILE
+================================================================================
+NAME = orca.inp
+|  1> !B3LYP DEF2-TZVP D3BJ
+|  2> !NEB-CI TightSCF defgrid2
+|  3> %SCF
+|  4>     MaxIter 2000       # Here setting MaxIter to a very high number. Intended for systems that require sometimes 1000 iterations before converging (very rare).
+|  5>     DIISMaxEq 5        # Default value is 5. A value of 15-40 necessary for difficult systems.
+|  6>     directresetfreq 15 # Default value is 15. A value of 1 (very expensive) is sometimes required. A value between 1 and 15 may be more cost-effective.
+|  7> END
+|  8> %CPCM EPSILON 6.02 REFRAC 1.3723 END
+|  9> %PAL NPROCS 32 END
+| 10> %maxcore 2000 # This indicates you want ORCA to use only 2GB per core maximum, so ORCA will use only 2GB*32=64GB of memory in total.
+| 11> %NEB
+| 12>     NEB_END_XYZFILE "product_opt.xyz"
+| 13>     Nimages 100
+| 14>     Interpolation IDPP
+| 15>     Opt_Method LBFGS
+| 16> END
+| 17> * XYZfile 1 1 reactant_opt_unconstrained.xyz
+| 18> 
+| 19>                          ****END OF INPUT****
+================================================================================
+
+
+--------------------------------------------------------------------------------
+                        Nudged Elastic Band Calculation
+--------------------------------------------------------------------------------
+
+Number of images (incl. end points)     ....  102
+Number of intermediate images           ....  100
+Number of optimized images              ....  100
+Optimization of end points before NEB   ....  NO
+Use existing gbw files for MO input     ....  NO
+Number of atoms                         ....  18
+Number of (active) degrees of freedom   ....  54
+Constrained atoms                       ....  None
+
+-----------------------------------------
+  REACTANT (ANGSTROEM)
+-----------------------------------------
+C     -2.983016     1.805909     1.618166 
+C     -1.890264     2.662351     1.508778 
+C     -0.723388     2.407985     2.222229 
+C     -0.659275     1.270597     3.042771 
+C     -1.756465     0.420588     3.159633 
+C     -2.922191     0.692619     2.449264 
+H     -3.885584     2.013135     1.057595 
+H     -3.774943     0.031730     2.534495 
+H     -1.947080     3.535778     0.870370 
+H      0.272793     1.019723     3.542888 
+H     -1.692190    -0.459094     3.786937 
+C      0.419449     3.388166     2.232339 
+N      0.316093     4.232427     3.464312 
+H      0.411941     4.014753     1.340039 
+H      1.372801     2.863825     2.281353 
+H      1.214410     4.651792     3.687901 
+H     -0.327699     5.002730     3.298991 
+Cu    -0.476922     3.075522     4.885386 
+
+-----------------------------------------
+  PRODUCT (ANGSTROEM)
+-----------------------------------------
+C     -2.990957     1.813887     1.613458 
+C     -1.907360     2.667010     1.510144 
+C     -0.730234     2.403506     2.234471 
+C     -0.659696     1.266548     3.061268 
+C     -1.747098     0.422571     3.158609 
+C     -2.911274     0.692362     2.434639 
+H     -3.895607     2.017813     1.057077 
+H     -3.757444     0.022273     2.514110 
+H     -1.954891     3.540233     0.872198 
+H      0.237030     1.038069     3.622086 
+H     -1.696077    -0.450664     3.794681 
+C      0.347170     3.333412     2.080250 
+N      1.522959     3.296015     2.748562 
+H      0.163780     4.245652     1.524520 
+H      1.761279     2.043288    -0.536808 
+H      2.057217     4.155056     2.833712 
+H      1.672737     2.625655     3.495355 
+Cu     1.910925     2.501772     0.894708 
+
+
+
+----------------------
+NEB settings
+----------------------
+Method type                             ....  climbing image
+Threshold for climbing image            ....  2.00e-02 Eh/Bohr 
+Free endpoints                          ....  off 
+Tangent type                            ....  improved 
+Number of intermediate images           ....  100 
+Number of images free to move           ....  100 
+Spring type for image distribution      ....  distance between adjacent images 
+Spring constant                         ....  energy weighted (0.0100 -to- 0.1000) Eh/Bohr^2 
+Spring force perp. to the path          ....  none 
+Generation of initial path              ....  image dependent pair potential 
+Initial path via TS guess               ....  off 
+
+Minimization of RMSD: Rotation          ....  always 
+Minimization of RMSD: Translation type  ....  centroid 
+Center fixed to origin                  ....  true 
+Remove external force                   ....  true 
+
+Reparametrization of the path           ....  off 
+Convergence thresholds:
+Convergence monitored for               ....  all images
+Scaling factor                          ....  10.00
+
+Convergence parameters for regular images:
+               Max(|Fp|)                ....  5.00e-03 Eh/Bohr
+               RMS(Fp)                  ....  2.50e-03 Eh/Bohr
+
+Convergence parameters for climbing image:
+               Max(|F|)                 ....  5.00e-04 Eh/Bohr
+               RMS(F)                   ....  2.50e-04 Eh/Bohr
+Optimization method:
+Method                                  ....  L-BFGS
+Max. iterations                         ....  500 
+Step size                               ....  1.00 
+Maximum allowed step size               ....  0.10 Bohr
+
+LBFGS parameters: 
+               Memory                   ....  20 
+               Initial step size        ....  0.0010 
+               Estimate curvature       ....  YES 
+               Reset on maxmove         ....  YES 
+               Reparam. on reset        ....  NO 
+Generation of  the initial path:
+Minimize RMSD between reactant and product configurations     .... done
+       RMSD before minimization         ....  1.7277 Bohr
+       RMSD after minimization          ....  1.3191 Bohr
+Performing linear interpolation         ....  done
+Interpolation using                     ....  IDPP (Image Dependent Pair Potential)
+IDPP-Settings:
+       Remove global transl. and rot.   ...   true
+       Convergence tolerance            ....  0.0100 1/Ang.^3
+       Max. numer of iterations         ....    7000
+       Spring constant                  ....  1.0000 1/Ang.^4
+       Time step                        ....  0.0100 fs
+       Max. movement per iteration      ....  0.0500 Ang.
+       Full print                       ....  false 
+idpp initial path generation successfully converged in 77 iterations
+Displacement along initial path:             11.9291 Bohr
+Writing initial trajectory to file      ....  orca_initial_path_trj.xyz
+
+
+
+----------------------
+NEB OPTIMIZATION      
+----------------------
+
+Following output files will be written:
+Energy profile during opt. written to    ....  orca.interp
+Optimization log-file                    ....  orca.NEB.log
+Current trajectory will be written to    ....  orca_MEP_trj.xyz
+       and to allxyz file                ....  orca_MEP.allxyz
+       and individual images to xyz file ....  orca_im{NIm}.xyz
+Trajectory history will be written to    ....  orca_MEP_ALL_trj.xyz
+Converged CI will be written to          ....  orca_NEB-CI_converged.xyz
+
+Single point energy and gradient calculation of reactant and
+product configurations (have to be performed only once)
+Properties of fixed NEB end points:
+               Reactant:
+                         E               ....  -1967.196202 Eh
+                         RMS(F)          ....      0.000033 Eh/Bohr
+                         MAX(|F|)        ....      0.000108 Eh/Bohr
+               Product:
+                         E               ....  -1967.143424 Eh
+                         RMS(F)          ....      0.000148 Eh/Bohr
+                         MAX(|F|)        ....      0.000411 Eh/Bohr
+
+
+
+Starting iterations:
+
+Optim.  Iteration  HEI  E(HEI)-E(0)  max(|Fp|)   RMS(Fp)    dS
+Switch-on CI threshold               0.020000 
+   LBFGS     0      49   0.139728    0.068082   0.010828  11.9291       
+   LBFGS     1      51   0.133933    0.068930   0.009210  11.8967       
+   LBFGS     2      52   0.129747    0.070161   0.008539  11.8945       
+   LBFGS     3      53   0.126087    0.069981   0.007900  11.8947       
+   LBFGS     4      53   0.122658    0.068939   0.007434  11.9142       
+   LBFGS     5      54   0.119285    0.068216   0.006859  11.9366       
+   LBFGS     6      54   0.115945    0.066892   0.006290  11.9754       
+   LBFGS     7      55   0.112576    0.064813   0.005756  12.0217       
+   LBFGS     8      55   0.109347    0.062275   0.005272  12.0756       
+   LBFGS     9      55   0.106019    0.058199   0.004740  12.1418       
+   LBFGS    10      56   0.102617    0.052915   0.004237  12.2161       
+   LBFGS    11      56   0.099456    0.047256   0.003769  12.3024       
+   LBFGS    12      56   0.096242    0.041382   0.003263  12.4024       
+   LBFGS    13      57   0.093189    0.034216   0.002921  12.5107       
+   LBFGS    14      57   0.090416    0.027480   0.002393  12.6442       
+   LBFGS    15      58   0.087721    0.021614   0.002129  12.7912       
+   LBFGS    16      58   0.086016    0.015621   0.001827  12.9825       
+
+Image 58 will be converted to a climbing image in the next iteration (max(|Fp|) < 0.0200) 
+
+Optim.  Iteration  CI   E(CI)-E(0)   max(|Fp|)   RMS(Fp)    dS     max(|FCI|)   RMS(FCI)
+Convergence thresholds               0.005000   0.002500            0.000500    0.000250 
+   LBFGS    17      58   0.085309    0.013381   0.002907  13.0704    0.008728    0.003856       
+   LBFGS    18      58   0.084383    0.014753   0.002739  13.1889    0.008225    0.003612       
+   LBFGS    19      58   0.082815    0.034578   0.002816  13.4534    0.008123    0.003406       
+   LBFGS    20      58   0.082507    0.009823   0.001135  13.4518    0.005295    0.001609       
+   LBFGS    21      58   0.082379    0.006625   0.001110  13.4654    0.005192    0.001634       
+   LBFGS    22      58   0.080990    0.051030   0.002140  13.7464    0.004288    0.001728       
+   LBFGS    23      58   0.080859    0.010942   0.001259  13.7416    0.004263    0.001533       
+   LBFGS    24      58   0.080730    0.012262   0.000935  13.7632    0.004105    0.001230       
+   LBFGS    25      58   0.080433    0.031307   0.001265  13.8409    0.003891    0.001301       
+   LBFGS    26      58   0.079688    0.045063   0.002143  14.1052    0.003821    0.001771       
+   LBFGS    27      58   0.078717    0.046968   0.002667  14.5654    0.005537    0.002373       
+   LBFGS    28      58   0.078575    0.027517   0.001100  14.4997    0.003193    0.001042       
+   LBFGS    29      58   0.078524    0.019644   0.000830  14.4655    0.003036    0.000948       
+   LBFGS    30      58   0.078340    0.008772   0.000749  14.4520    0.002894    0.000851       
+   LBFGS    31      58   0.078222    0.011398   0.000918  14.4742    0.002778    0.000940       
+   LBFGS    32      58   0.078098    0.012622   0.000802  14.5085    0.002751    0.000802       
+   LBFGS    33      58   0.077674    0.022582   0.001198  14.7120    0.002735    0.000910       
+   LBFGS    34      58   0.076980    0.032277   0.001537  15.1969    0.002559    0.000858       
+   LBFGS    35      58   0.076427    0.041174   0.001743  15.8129    0.002855    0.001352       
+   LBFGS    36      58   0.076380    0.035060   0.001324  15.7000    0.002005    0.000981       
+   LBFGS    37      58   0.076349    0.030468   0.001155  15.5938    0.001686    0.000861       
+   LBFGS    38      58   0.076296    0.017297   0.000926  15.4288    0.001745    0.000849       
+   LBFGS    39      58   0.076274    0.014351   0.000548  15.4059    0.001711    0.000529       
+   LBFGS    40      58   0.076260    0.011667   0.000509  15.3912    0.001704    0.000554       
+   LBFGS    41      58   0.076159    0.008493   0.000558  15.4129    0.001605    0.000463       
+   LBFGS    42      58   0.076145    0.006953   0.000494  15.4128    0.001579    0.000458       
+   LBFGS    43      58   0.076131    0.005960   0.000427  15.4154    0.001555    0.000454       
+   LBFGS    44      58   0.075965    0.014741   0.000564  15.5485    0.001311    0.000428       
+   LBFGS    45      58   0.075821    0.018853   0.000945  15.7099    0.001229    0.000423       
+   LBFGS    46      58   0.075628    0.020422   0.000930  16.0072    0.001197    0.000389       
+   LBFGS    47      58   0.075400    0.019265   0.001230  16.5329    0.001031    0.000380       
+   LBFGS    48      58   0.075394    0.013921   0.000632  16.4746    0.001014    0.000298       
+   LBFGS    49      58   0.075390    0.010284   0.000506  16.4360    0.001001    0.000290       
+   LBFGS    50      58   0.075368    0.009750   0.000431  16.3134    0.000925    0.000258       
+   LBFGS    51      58   0.075352    0.008742   0.000495  16.2847    0.000855    0.000251       
+   LBFGS    52      58   0.075326    0.006119   0.000410  16.3025    0.000789    0.000247       
+   LBFGS    53      58   0.075279    0.010933   0.000628  16.4626    0.000701    0.000316       
+   LBFGS    54      58   0.075233    0.009193   0.000536  16.7808    0.000630    0.000245       
+   LBFGS    55      58   0.075215    0.009448   0.000452  16.8539    0.000753    0.000237       
+   LBFGS    56      58   0.075172    0.010071   0.000683  17.0727    0.001047    0.000313       
+   LBFGS    57      58   0.075137    0.017394   0.001022  17.3537    0.000843    0.000269       
+   LBFGS    58      58   0.075131    0.008191   0.000522  17.3604    0.000634    0.000194       
+   LBFGS    59      58   0.075110    0.005219   0.000374  17.5078    0.000389    0.000156       
+   LBFGS    60      58   0.075089    0.006623   0.000454  17.7163    0.000687    0.000171       
+   LBFGS    61      58   0.075054    0.009430   0.000578  18.1167    0.000745    0.000169       
+   LBFGS    62      58   0.075053    0.004882   0.000366  18.0826    0.000633    0.000145       
+   LBFGS    63      58   0.075052    0.004833   0.000318  18.0533    0.000540    0.000134       
+   LBFGS    64      58   0.075045    0.007396   0.000433  17.8052    0.000682    0.000175       
+   LBFGS    65      58   0.075041    0.015779   0.000745  17.7152    0.000716    0.000183       
+   LBFGS    66      58   0.075038    0.010825   0.000518  17.6864    0.000544    0.000148       
+   LBFGS    67      58   0.075028    0.004783   0.000311  17.6150    0.000285    0.000106       
+
+                                .--------------------.
+          ----------------------| CI-NEB convergence |-------------------------
+          Item                value                   Tolerance       Converged
+          ---------------------------------------------------------------------
+          RMS(Fp)             0.0003114911            0.0025000000      YES
+          MAX(|Fp|)           0.0047825419            0.0050000000      YES
+          RMS(FCI)            0.0001057986            0.0002500000      YES
+          MAX(|FCI|)          0.0002848578            0.0005000000      YES
+          ---------------------------------------------------------------------
+
+The elastic band and climbing image have converged successfully to a MEP in 67 iterations!
+
+
+                    *********************H U R R A Y*********************
+                    ***        THE NEB OPTIMIZATION HAS CONVERGED     ***
+                    *****************************************************
+
+
+
+---------------------------------------------------------------
+                         PATH SUMMARY              
+---------------------------------------------------------------
+All forces in Eh/Bohr.
+
+Image Dist.(Ang.)    E(Eh)   dE(kcal/mol)  max(|Fp|)  RMS(Fp)
+  0     0.000   -1967.19620      0.00       0.00011   0.00003
+  1     0.051   -1967.19620      0.00       0.00005   0.00002
+  2     0.102   -1967.19618      0.01       0.00018   0.00008
+  3     0.153   -1967.19616      0.02       0.00007   0.00003
+  4     0.203   -1967.19613      0.05       0.00007   0.00003
+  5     0.253   -1967.19609      0.07       0.00014   0.00005
+  6     0.301   -1967.19603      0.11       0.00008   0.00003
+  7     0.349   -1967.19597      0.15       0.00009   0.00003
+  8     0.396   -1967.19590      0.19       0.00007   0.00003
+  9     0.444   -1967.19583      0.23       0.00008   0.00004
+ 10     0.491   -1967.19575      0.28       0.00007   0.00003
+ 11     0.540   -1967.19568      0.33       0.00008   0.00004
+ 12     0.589   -1967.19561      0.37       0.00008   0.00004
+ 13     0.638   -1967.19554      0.42       0.00009   0.00004
+ 14     0.688   -1967.19546      0.46       0.00010   0.00005
+ 15     0.738   -1967.19537      0.52       0.00014   0.00005
+ 16     0.788   -1967.19528      0.58       0.00018   0.00006
+ 17     0.837   -1967.19517      0.65       0.00022   0.00007
+ 18     0.887   -1967.19507      0.71       0.00024   0.00007
+ 19     0.938   -1967.19497      0.77       0.00024   0.00007
+ 20     0.990   -1967.19487      0.84       0.00021   0.00007
+ 21     1.045   -1967.19476      0.90       0.00017   0.00006
+ 22     1.102   -1967.19466      0.97       0.00013   0.00005
+ 23     1.162   -1967.19454      1.04       0.00009   0.00005
+ 24     1.223   -1967.19442      1.12       0.00010   0.00004
+ 25     1.286   -1967.19430      1.19       0.00010   0.00004
+ 26     1.349   -1967.19417      1.28       0.00010   0.00003
+ 27     1.413   -1967.19404      1.36       0.00010   0.00004
+ 28     1.478   -1967.19390      1.44       0.00009   0.00004
+ 29     1.546   -1967.19376      1.53       0.00009   0.00004
+ 30     1.616   -1967.19361      1.63       0.00008   0.00004
+ 31     1.689   -1967.19345      1.73       0.00009   0.00003
+ 32     1.764   -1967.19327      1.84       0.00009   0.00003
+ 33     1.843   -1967.19307      1.97       0.00006   0.00002
+ 34     1.925   -1967.19285      2.10       0.00006   0.00003
+ 35     2.010   -1967.19264      2.24       0.00008   0.00003
+ 36     2.098   -1967.19242      2.37       0.00010   0.00003
+ 37     2.191   -1967.19220      2.51       0.00011   0.00003
+ 38     2.288   -1967.19197      2.65       0.00012   0.00004
+ 39     2.389   -1967.19174      2.80       0.00015   0.00005
+ 40     2.499   -1967.19149      2.95       0.00019   0.00006
+ 41     2.621   -1967.19125      3.10       0.00019   0.00006
+ 42     2.763   -1967.19099      3.27       0.00019   0.00006
+ 43     2.930   -1967.19067      3.47       0.00022   0.00007
+ 44     3.120   -1967.19032      3.69       0.00019   0.00006
+ 45     3.331   -1967.18986      3.98       0.00014   0.00006
+ 46     3.557   -1967.18925      4.37       0.00022   0.00009
+ 47     3.792   -1967.18849      4.84       0.00038   0.00012
+ 48     4.027   -1967.18760      5.40       0.00073   0.00022
+ 49     4.271   -1967.18636      6.17       0.00176   0.00057
+ 50     4.528   -1967.18296      8.31       0.00203   0.00069
+ 51     4.882   -1967.17384     14.03       0.00211   0.00073
+ 52     5.317   -1967.15311     27.04       0.00403   0.00164
+ 53     5.496   -1967.13811     36.45       0.00478   0.00180
+ 54     5.602   -1967.12990     41.61       0.00066   0.00028
+ 55     5.670   -1967.12595     44.09       0.00043   0.00012
+ 56     5.743   -1967.12307     45.89       0.00035   0.00011
+ 57     5.815   -1967.12158     46.83       0.00032   0.00011
+ 58     5.881   -1967.12117     47.08       0.00030   0.00011 <= CI
+ 59     5.962   -1967.12165     46.78       0.00026   0.00011
+ 60     6.047   -1967.12295     45.97       0.00029   0.00011
+ 61     6.142   -1967.12490     44.74       0.00030   0.00012
+ 62     6.245   -1967.12728     43.25       0.00027   0.00012
+ 63     6.358   -1967.12979     41.68       0.00056   0.00018
+ 64     6.493   -1967.13240     40.04       0.00121   0.00029
+ 65     6.645   -1967.13456     38.68       0.00165   0.00053
+ 66     6.801   -1967.13604     37.75       0.00185   0.00058
+ 67     6.941   -1967.13723     37.01       0.00194   0.00045
+ 68     7.072   -1967.13796     36.55       0.00332   0.00059
+ 69     7.243   -1967.13932     35.69       0.00095   0.00029
+ 70     7.367   -1967.13895     35.92       0.00205   0.00053
+ 71     7.480   -1967.13893     35.94       0.00180   0.00049
+ 72     7.531   -1967.13916     35.80       0.00093   0.00033
+ 73     7.605   -1967.13960     35.52       0.00017   0.00005
+ 74     7.708   -1967.14015     35.17       0.00026   0.00006
+ 75     7.821   -1967.14068     34.84       0.00042   0.00009
+ 76     7.924   -1967.14110     34.58       0.00051   0.00010
+ 77     8.012   -1967.14141     34.38       0.00057   0.00011
+ 78     8.089   -1967.14166     34.23       0.00059   0.00012
+ 79     8.158   -1967.14186     34.10       0.00060   0.00012
+ 80     8.222   -1967.14204     33.99       0.00059   0.00011
+ 81     8.282   -1967.14219     33.90       0.00057   0.00011
+ 82     8.340   -1967.14232     33.81       0.00055   0.00011
+ 83     8.396   -1967.14244     33.74       0.00053   0.00010
+ 84     8.449   -1967.14255     33.67       0.00051   0.00010
+ 85     8.502   -1967.14264     33.61       0.00050   0.00010
+ 86     8.552   -1967.14274     33.55       0.00048   0.00009
+ 87     8.602   -1967.14283     33.49       0.00047   0.00009
+ 88     8.652   -1967.14291     33.44       0.00045   0.00009
+ 89     8.701   -1967.14299     33.39       0.00043   0.00008
+ 90     8.750   -1967.14306     33.34       0.00041   0.00008
+ 91     8.800   -1967.14313     33.30       0.00039   0.00008
+ 92     8.850   -1967.14320     33.26       0.00036   0.00007
+ 93     8.900   -1967.14326     33.22       0.00033   0.00007
+ 94     8.951   -1967.14331     33.19       0.00030   0.00006
+ 95     9.003   -1967.14335     33.16       0.00026   0.00005
+ 96     9.055   -1967.14339     33.14       0.00022   0.00005
+ 97     9.108   -1967.14342     33.12       0.00019   0.00004
+ 98     9.161   -1967.14344     33.11       0.00015   0.00004
+ 99     9.214   -1967.14345     33.10       0.00010   0.00003
+100     9.268   -1967.14346     33.10       0.00008   0.00003
+101     9.321   -1967.14342     33.12       0.00040   0.00014
+
+Straight line distance between images along the path:
+        D( 0- 1) =   0.0511 Ang.
+        D( 1- 2) =   0.0510 Ang.
+        D( 2- 3) =   0.0508 Ang.
+        D( 3- 4) =   0.0503 Ang.
+        D( 4- 5) =   0.0494 Ang.
+        D( 5- 6) =   0.0486 Ang.
+        D( 6- 7) =   0.0478 Ang.
+        D( 7- 8) =   0.0473 Ang.
+        D( 8- 9) =   0.0473 Ang.
+        D( 9-10) =   0.0477 Ang.
+        D(10-11) =   0.0484 Ang.
+        D(11-12) =   0.0489 Ang.
+        D(12-13) =   0.0496 Ang.
+        D(13-14) =   0.0500 Ang.
+        D(14-15) =   0.0499 Ang.
+        D(15-16) =   0.0495 Ang.
+        D(16-17) =   0.0494 Ang.
+        D(17-18) =   0.0497 Ang.
+        D(18-19) =   0.0508 Ang.
+        D(19-20) =   0.0526 Ang.
+        D(20-21) =   0.0549 Ang.
+        D(21-22) =   0.0574 Ang.
+        D(22-23) =   0.0596 Ang.
+        D(23-24) =   0.0613 Ang.
+        D(24-25) =   0.0624 Ang.
+        D(25-26) =   0.0631 Ang.
+        D(26-27) =   0.0639 Ang.
+        D(27-28) =   0.0654 Ang.
+        D(28-29) =   0.0676 Ang.
+        D(29-30) =   0.0701 Ang.
+        D(30-31) =   0.0728 Ang.
+        D(31-32) =   0.0757 Ang.
+        D(32-33) =   0.0788 Ang.
+        D(33-34) =   0.0817 Ang.
+        D(34-35) =   0.0849 Ang.
+        D(35-36) =   0.0885 Ang.
+        D(36-37) =   0.0925 Ang.
+        D(37-38) =   0.0969 Ang.
+        D(38-39) =   0.1019 Ang.
+        D(39-40) =   0.1095 Ang.
+        D(40-41) =   0.1223 Ang.
+        D(41-42) =   0.1420 Ang.
+        D(42-43) =   0.1662 Ang.
+        D(43-44) =   0.1901 Ang.
+        D(44-45) =   0.2110 Ang.
+        D(45-46) =   0.2262 Ang.
+        D(46-47) =   0.2347 Ang.
+        D(47-48) =   0.2351 Ang.
+        D(48-49) =   0.2447 Ang.
+        D(49-50) =   0.2568 Ang.
+        D(50-51) =   0.3534 Ang.
+        D(51-52) =   0.4357 Ang.
+        D(52-53) =   0.1787 Ang.
+        D(53-54) =   0.1061 Ang.
+        D(54-55) =   0.0679 Ang.
+        D(55-56) =   0.0732 Ang.
+        D(56-57) =   0.0714 Ang.
+        D(57-58) =   0.0669 Ang.
+        D(58-59) =   0.0804 Ang.
+        D(59-60) =   0.0854 Ang.
+        D(60-61) =   0.0943 Ang.
+        D(61-62) =   0.1034 Ang.
+        D(62-63) =   0.1125 Ang.
+        D(63-64) =   0.1355 Ang.
+        D(64-65) =   0.1518 Ang.
+        D(65-66) =   0.1559 Ang.
+        D(66-67) =   0.1406 Ang.
+        D(67-68) =   0.1312 Ang.
+        D(68-69) =   0.1703 Ang.
+        D(69-70) =   0.1245 Ang.
+        D(70-71) =   0.1126 Ang.
+        D(71-72) =   0.0514 Ang.
+        D(72-73) =   0.0735 Ang.
+        D(73-74) =   0.1033 Ang.
+        D(74-75) =   0.1125 Ang.
+        D(75-76) =   0.1031 Ang.
+        D(76-77) =   0.0886 Ang.
+        D(77-78) =   0.0768 Ang.
+        D(78-79) =   0.0690 Ang.
+        D(79-80) =   0.0639 Ang.
+        D(80-81) =   0.0604 Ang.
+        D(81-82) =   0.0577 Ang.
+        D(82-83) =   0.0556 Ang.
+        D(83-84) =   0.0537 Ang.
+        D(84-85) =   0.0521 Ang.
+        D(85-86) =   0.0508 Ang.
+        D(86-87) =   0.0499 Ang.
+        D(87-88) =   0.0494 Ang.
+        D(88-89) =   0.0492 Ang.
+        D(89-90) =   0.0494 Ang.
+        D(90-91) =   0.0496 Ang.
+        D(91-92) =   0.0500 Ang.
+        D(92-93) =   0.0504 Ang.
+        D(93-94) =   0.0510 Ang.
+        D(94-95) =   0.0515 Ang.
+        D(95-96) =   0.0520 Ang.
+        D(96-97) =   0.0526 Ang.
+        D(97-98) =   0.0531 Ang.
+        D(98-99) =   0.0534 Ang.
+        D(99-100) =   0.0537 Ang.
+        D(100-101) =   0.0538 Ang.
+
+---------------------------------------------------------------
+               INFORMATION ABOUT SADDLE POINT     
+---------------------------------------------------------------
+
+Climbing image                            ....  58 
+Energy                                    ....  -1967.12117352 Eh
+Max. abs. force                           ....  2.8486e-04 Eh/Bohr
+
+-----------------------------------------
+  SADDLE POINT (ANGSTROEM)
+-----------------------------------------
+C     -1.753942    -0.714358    -1.363635 
+C     -0.716509     0.204538    -1.249037 
+C      0.157295     0.139881    -0.163093 
+C     -0.009799    -0.857753     0.800314 
+C     -1.040270    -1.777301     0.678607 
+C     -1.915138    -1.706699    -0.403819 
+H     -2.431386    -0.656077    -2.205539 
+H     -2.713071    -2.431242    -0.502019 
+H     -0.589933     0.977141    -1.997415 
+H      0.685561    -0.933478     1.628636 
+H     -1.153911    -2.558859     1.418432 
+C      1.216206     1.167988    -0.053841 
+N      1.269735     1.942752     1.125155 
+H      1.389856     1.746299    -0.950949 
+H      2.600996     0.099475    -0.489608 
+H      1.430615     2.934392     1.009881 
+H      0.613046     1.708944     1.857369 
+Cu     2.960649     0.714358     0.860562 
+
+-----------------------------------------
+  FORCES (Eh/Bohr)
+-----------------------------------------
+C      0.000062    -0.000062    -0.000034 
+C      0.000112    -0.000063    -0.000075 
+C      0.000026    -0.000047    -0.000030 
+C      0.000012     0.000067     0.000004 
+C     -0.000055     0.000045     0.000081 
+C      0.000008     0.000073    -0.000004 
+H      0.000076    -0.000046    -0.000070 
+H     -0.000124     0.000100     0.000085 
+H      0.000139    -0.000177    -0.000116 
+H     -0.000091     0.000022     0.000047 
+H     -0.000147     0.000122     0.000100 
+C     -0.000096    -0.000028    -0.000059 
+N      0.000003    -0.000085     0.000131 
+H     -0.000142     0.000140     0.000085 
+H      0.000138     0.000285    -0.000068 
+H     -0.000128    -0.000141     0.000161 
+H      0.000094    -0.000245     0.000053 
+Cu     0.000013     0.000056    -0.000233 
+
+-----------------------------------------
+  UNIT TANGENT
+-----------------------------------------
+C      0.008990    -0.004639    -0.005183 
+C      0.002251    -0.000446    -0.002131 
+C     -0.033605     0.032615     0.037974 
+C     -0.015340     0.013278     0.022520 
+C      0.005891    -0.003056     0.001025 
+C      0.005998    -0.000147    -0.000727 
+H      0.008526    -0.005288    -0.004741 
+H      0.005873    -0.000370    -0.001131 
+H     -0.000389     0.002388     0.001246 
+H     -0.009056     0.011563     0.014483 
+H      0.008062    -0.007795    -0.004734 
+C     -0.253802     0.201487     0.112528 
+N     -0.174287     0.097243     0.001484 
+H      0.015100     0.029539     0.053072 
+H      0.653842    -0.457493    -0.147377 
+H      0.039596     0.069307     0.084059 
+H     -0.016149     0.048989     0.120384 
+Cu    -0.251502    -0.027174    -0.282750 
+ => Unit tangent is an approximation to the TS mode at the saddle point
+----------
+STATISTICS
+----------
+
+For the individual parts of the NEB, NEB-CI or NEB-TS run:
+
+Number of iterations:
+     NEB                               ... 68  100.0%
+Number of SCF / gradient calculations:
+     NEB                               ... 8602  100.0%
+
+----------
+ TIMINGS
+----------
+
+For the individual parts of the NEB, NEB-CI or NEB-TS run:
+
+Total                                  ...   127584.213 sec
+NEB                                    ...   127584.213 sec  100.0%
+
+
+Timings for individual modules:
+
+Sum of individual times         ...   128519.826 sec (=2141.997 min)
+GTO integral calculation        ...       22.238 sec (=   0.371 min)   0.0 %
+SCF iterations                  ...      873.762 sec (=  14.563 min)   0.7 %
+SCF Gradient evaluation         ...       39.612 sec (=   0.660 min)   0.0 %
+NEB Iterations                  ...   127584.213 sec (=2126.404 min)  99.3 %
+                             ****ORCA TERMINATED NORMALLY****
+TOTAL RUN TIME: 1 days 11 hours 26 minutes 41 seconds 888 msec
