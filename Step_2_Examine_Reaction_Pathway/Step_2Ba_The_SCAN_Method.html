@@ -1,0 +1,1501 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="The procedure for investigating chemical mechanisms in ORCA is described here">
+      
+      
+        <meta name="author" content="Geoffrey Weal">
+      
+      
+        <link rel="canonical" href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/Step_2_Examine_Reaction_Pathway/Step_2Ba_The_SCAN_Method.html">
+      
+      
+        <link rel="prev" href="Step_2A_Prepare_The_Reaction_System.html">
+      
+      
+        <link rel="next" href="Step_2Bb_The_NEB_Method.html">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>Step 2Ba - SCAN - Procedure for Investigating Reaction Mechanisms in ORCA</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="Step 2Ba - SCAN - Procedure for Investigating Reaction Mechanisms in ORCA" >
+      
+        <meta  property="og:description"  content="The procedure for investigating chemical mechanisms in ORCA is described here" >
+      
+        <meta  property="og:image"  content="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/assets/images/social/Step_2_Examine_Reaction_Pathway/Step_2Ba_The_SCAN_Method.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/Step_2_Examine_Reaction_Pathway/Step_2Ba_The_SCAN_Method.html" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="Step 2Ba - SCAN - Procedure for Investigating Reaction Mechanisms in ORCA" >
+      
+        <meta  name="twitter:description"  content="The procedure for investigating chemical mechanisms in ORCA is described here" >
+      
+        <meta  name="twitter:image"  content="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/assets/images/social/Step_2_Examine_Reaction_Pathway/Step_2Ba_The_SCAN_Method.png" >
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#step-2ba-the-scan-method" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="Procedure for Investigating Reaction Mechanisms in ORCA" class="md-header__button md-logo" aria-label="Procedure for Investigating Reaction Mechanisms in ORCA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Procedure for Investigating Reaction Mechanisms in ORCA
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Step 2Ba - SCAN
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-1h-4m2-13a5.002 5.002 0 0 0-3 9v2c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-2a4.997 4.997 0 0 0 1-7c-.94-1.26-2.43-2-4-2m1 7.82V17h-2v-2.18A3 3 0 0 1 11.17 11 3.003 3.003 0 0 1 15 9.16c1.56.56 2.38 2.27 1.83 3.84-.3.85-.98 1.5-1.83 1.82M7.68 15H7v1c0 .55.45 1 1 1h1v-.12c-.54-.55-1-1.18-1.32-1.88M13.6 5C12.5 2.47 9.53 1.33 7 2.45S3.34 6.5 4.45 9.04c.34.77.88 1.46 1.55 1.96v2c0 .55.45 1 1 1h.3c-.2-.65-.3-1.32-.3-2 0-3.71 2.89-6.79 6.6-7"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="green"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    geoffreyweal/ORCA_Mechanism_Procedure
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../index.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Programs_to_Install.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Programs to Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Investigating_Mechanisms.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Investigate
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Before_You_Begin.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Before You Begin
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Step_1_Locally_Optimise_Reactant_and_Product.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  1. Optimise R and P
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="index.html" class="md-tabs__link">
+          
+  
+  
+    
+  
+  2. Examine Pathway
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Step_3_Optimise_the_Transition_State.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  3. Optimise TS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Step_4_Validate_TS/index.html" class="md-tabs__link">
+          
+  
+  
+    
+  
+  4. Validate TS
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Step_5_Compile_Results.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  5. Compile Results
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://geoffreyweal.github.io/viewORCA/viewORCA_Manual" class="md-tabs__link">
+        
+  
+  
+    
+  
+  viewORCA Manual
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="Procedure for Investigating Reaction Mechanisms in ORCA" class="md-nav__button md-logo" aria-label="Procedure for Investigating Reaction Mechanisms in ORCA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    Procedure for Investigating Reaction Mechanisms in ORCA
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    geoffreyweal/ORCA_Mechanism_Procedure
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Programs_to_Install.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Programs to Install
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Investigating_Mechanisms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Investigate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Before_You_Begin.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Before You Begin
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Step_1_Locally_Optimise_Reactant_and_Product.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Optimise R and P
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="index.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    2. Examine Pathway
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            2. Examine Pathway
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Step_2A_Prepare_The_Reaction_System.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Step 2A - Prepare Reaction System
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Step 2Ba - SCAN
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Step_2Ba_The_SCAN_Method.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Step 2Ba - SCAN
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#outputs-from-orca" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outputs from ORCA
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Outputs from ORCA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#check-does-the-scan-path-make-sense-chemically-and-physically" class="md-nav__link">
+    <span class="md-ellipsis">
+      Check: Does the SCAN path make sense chemically and physically
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advice-about-scans" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advice about SCANs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-should-i-do-if-i-need-to-restart-a-scan-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      What should I do if I need to restart a SCAN run
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-information-about-performing-scan-calculations-in-orca" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other information about performing SCAN calculations in ORCA
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-the-scan-calculation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting the SCAN calculation
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Step_2Bb_The_NEB_Method.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Step 2Bb - NEB
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Step_3_Optimise_the_Transition_State.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3. Optimise TS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../Step_4_Validate_TS/index.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    4. Validate TS
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            4. Validate TS
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Step_4_Validate_TS/Step_4A_The_IRC_Method.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Step 4A - The IRC Method
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Step_4_Validate_TS/Step_4B_Local_Optimisation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Step 4B - Optimise the Forward and Backwards States
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Step_5_Compile_Results.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5. Compile Results
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://geoffreyweal.github.io/viewORCA/viewORCA_Manual" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    viewORCA Manual
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="step-2ba-the-scan-method">Step 2Ba: The SCAN Method<a class="headerlink" href="#step-2ba-the-scan-method" title="Permanent link">&para;</a></h1>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Download the template folder for this step by clicking the button below and work on the files in the template folder as you read through this tutorial. </p>
+<p><a :download=":download" class="md-button md-button--primary" href="../Files/Templates.zip">Download Templates.zip <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4.75 17.25a.75.75 0 0 1 .75.75v2.25c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V18a.75.75 0 0 1 1.5 0v2.25A1.75 1.75 0 0 1 18.25 22H5.75A1.75 1.75 0 0 1 4 20.25V18a.75.75 0 0 1 .75-.75"/><path d="M5.22 9.97a.75.75 0 0 1 1.06 0l4.97 4.969V2.75a.75.75 0 0 1 1.5 0v12.189l4.97-4.969a.749.749 0 1 1 1.06 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0l-6.25-6.25a.75.75 0 0 1 0-1.06"/></svg></span></a></p>
+</div>
+<p>In a SCAN calculation, we want to map how a reaction proceeds by gradually changing the distance between two atoms. The SCAN calculation works as follows:</p>
+<ol>
+<li>Perform a geometric optimisation on the chemical system, where the distance between two atoms are fixed.</li>
+<li>Repeat the geometric optimisation on the same chemical system, where the position of the two atoms is changed by <span class="arithmatex">\(dx\)</span>.</li>
+<li>Repeat this until the distance between the two atoms changes to the desired final length. </li>
+</ol>
+<p>To perform a SCAN, we first include this line in our input file:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>!OPT NormalOPT TightSCF defgrid2 # Try TightOPT if you have convergence problems. 
+</span></code></pre></div>
+<p>The tags here indicate you want to do the following: </p>
+<ul>
+<li><code>OPT</code>: Indicates you want ORCA to perform local optimisations during your SCAN calculation. </li>
+<li><code>TightSCF</code>: Tells ORCA to tighten the convergence criteria for each electronic step. </li>
+<li><code>defgrid2</code>: Indicates how fine we want the intergration grid to be (This is the default)</li>
+<li><code>NormalOPT</code>: Indicate we want to use normal geometric convergence settings. </li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>For these calculations we want to use <code>NormalOPT</code> rather than <code>TightOPT</code> because we are only wanting to get a good idea of what the transition state looks like. </p>
+<ul>
+<li><code>NormalOPT</code> is ideal for SCAN calculations as it is the usual convergence criteria for performing optimisations, and will run faster than using <code>TightOPT</code>. </li>
+<li>However, if you have problems with convergence issues, you can try using <code>TightOPT</code>. See the <a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/orca_manual_6_1_0.pdf">ORCA 6.1.0 Manual</a>, page 618 for more information.</li>
+</ul>
+</div>
+<p>We also include the following lines:</p>
+<div class="language-text highlight"><span class="filename">Extra lines required for a SCAN calculation</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>%GEOM 
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    SCAN B atom_index_1 atom_index_2 = initial_distance, final_distance, linespace+1 END 
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>END
+</span></code></pre></div>
+<p>where:</p>
+<ul>
+<li><code>atom_index_1</code>: This is the index of the first atom. Obtain this using <code>ase gui</code>.</li>
+<li><code>atom_index_2</code>: This is the index of the second atom. Obtain this using <code>ase gui</code>.</li>
+<li><code>initial_distance</code>: The initial distance between the two atoms. Get this by measuring the distance between the two atoms in your system using a GUI (such as avogadro or <code>ase gui</code>) and record it here.</li>
+<li><code>final_distance</code>: The final distance between the two atoms. </li>
+<li><code>linespace</code>: The number of SCAN steps you want to perform. </li>
+</ul>
+<p>An example for these lines is given below:</p>
+<div class="language-text highlight"><span class="filename">Extra lines required for a SCAN calculation</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>%GEOM 
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    SCAN B 11 16 = 3.245, 0.745, 126 END 
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>END
+</span></code></pre></div>
+<p>In this example, we have told ORCA to begin by setting the distance between atom 11 and 16 to 3.245 Å, and then decrease the distance between these two atoms to 0.745 Å in increments of <span class="arithmatex">\(\frac{3.245-0.745}{126-1} = 0.02\)</span> Å. </p>
+<div class="admonition note">
+<p class="admonition-title"><strong>NOTE 1</strong></p>
+<p>You will want to measure the initial distance between your two atoms using a GUI like <code>ase gui</code>. This is the value you want to put in for the initial bond distance. </p>
+<ul>
+<li>This is how I got the bond distance between atom 11 and 16 to 3.245 Å for this example. </li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title"><strong>NOTE 2</strong></p>
+<p>ORCA counts atoms starting from 0. This means that in some GUIs (like GView), atom 11 here is atom 12 in GView. <strong>In the ASE GUI and all the programs given here, atoms numbers are equal to ORCA. I.e.: atom 11 in the ASE GUI means atom 11 in ORCA</strong>. </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title"><strong>NOTE 3</strong></p>
+<p>We have set the number of steps to perform to 126 rather than 125. This is because we are including the endpoint in our SCAN, and I want the increments to be spaced by a rational value (i.e.: <span class="arithmatex">\(\frac{3.245-0.745}{126-1} = 0.02\)</span> Å step size). </p>
+<ul>
+<li>This is just a personal preference of mine, and is not a hard rule. </li>
+</ul>
+</div>
+<p>In this example, we are looking at how a Cu atom could insert itself into a C-H bond. The <code>orca.inp</code> file for this example is given below (also <a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/Examples/Step2_Find_TS/Step2Ba_SCAN/SCAN_NormalOPT/orca.inp">located here</a>): </p>
+<div class="language-text highlight"><span class="filename">Example orca.inp file used to perform a SCAN calculation</span><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>!B3LYP DEF2-TZVP D3BJ
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>!OPT NormalOPT TightSCF defgrid2 # Try TightOPT if you have convergence problems. 
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>%SCF
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    MaxIter 2000       # Here setting MaxIter to a very high number. Intended for systems that require sometimes 1000 iterations before converging (very rare).
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    DIISMaxEq 5        # Default value is 5. A value of 15-40 necessary for difficult systems.
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    directresetfreq 15 # Default value is 15. A value of 1 (very expensive) is sometimes required. A value between 1 and 15 may be more cost-effective.
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>END
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>%CPCM EPSILON 6.02 REFRAC 1.3723 END
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>%PAL NPROCS 32 END
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>%maxcore 2000
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>%GEOM 
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    SCAN B 11 16 = 3.245, 0.745, 126 END 
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>END
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>* xyzfile 1 1 opt_product.xyz
+</span></code></pre></div>
+<h2 id="outputs-from-orca">Outputs from ORCA<a class="headerlink" href="#outputs-from-orca" title="Permanent link">&para;</a></h2>
+<p>As well as the <a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/Examples/Step2_Find_TS/Step2Ba_SCAN/SCAN_NormalOPT/output.out"><code>output.out</code></a> and <a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/Examples/Step2_Find_TS/Step2Ba_SCAN/SCAN_NormalOPT/orca_trj.xyz"><code>orca_trj.xyz</code></a> files, ORCA will also give:</p>
+<ul>
+<li>A series of files called <code>orca.001.xyz</code>, <code>orca.002.xyz</code>, <code>orca.003.xyz</code>, ... up to <code>orca.126.xyz</code>. These are the steps in the SCAN process. </li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title"><strong>NOTE</strong></p>
+<p>The <code>orca_trj.xyz</code> contains the xyz files for every geometric optimisation across all SCAN steps, so it can be unhelpful to view on its own. However, keep it as it will be used by the <code>viewORCA</code> program.</p>
+</div>
+<p>To view the SCAN mechanism and the energy path, type <code>viewORCA scan</code> in the terminal and hit enter. This will load a program that will allow you to see how the SCAN calculation performed your mechanism, along with the energy profile. </p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># cd into your optimisation folder</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">cd</span><span class="w"> </span>ORCA_Mechanism_Procedure/Examples/Step2_Find_TS/SCAN
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># View the SCAN calculation </span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>viewORCA<span class="w"> </span>scan
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title"><strong>NOTE 1</strong></p>
+<p><code>viewORCA scan</code> will also create a xyz file called <code>SCAN_images.xyz</code> that you can copy and view on your own computer. </p>
+<ul>
+<li>If you just want to create the <code>SCAN_images.xyz</code> file, type into the terminal <code>viewORCA scan --view False</code> (which will create the <code>SCAN_images.xyz</code> file without launching <code>ase gui</code>). </li>
+</ul>
+</div>
+<p>Once you run <code>viewORCA scan</code>, you will get a GUI that shows you the following SCAN pathway:</p>
+<figure>
+    <img src="../Figures/2Ba_SCAN/SCAN_example.gif?raw=true" alt="SCAN Images" width="700"/>
+    <figcaption>GIF of the SCAN job</figcaption>
+</figure>
+<p>The energy profile for this example is given below:</p>
+<figure>
+    <img src="../Figures/2Ba_SCAN/SCAN_energy.png?raw=true" alt="SCAN Energy Profile" width="700"/>
+    <figcaption>Energy Profile of the SCAN job</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title"><strong>NOTE 2</strong></p>
+<p>The energy goes up at the end because the hydrogen atom is probably getting too close to the carbon atom. We can ignore this part of the SCAN (after around step 110), as it is not relavant to us for finding the transition state for this mechanistic step. </p>
+</div>
+<p>The easiest way to use this GUI is to zoom in on the part of the energy profile looks like the transition state (by clicking on the <img src="../Figures/2Ba_SCAN/Magnifying_Glass.png?raw=true" alt="drawing" width="25"/> button), and from this determine the image this corresponds to by looking at the x axis. Move the cursor over the highest point along the energy profile, and read the x value:</p>
+<figure>
+    <img src="../Figures/2Ba_SCAN/SCAN_energy_zoomed_in.png?raw=true" alt="SCAN Energy Profile - Zoomed in on Transition State" width="700"/>
+    <figcaption>SCAN Energy Profile - Zoomed in on Transition State</figcaption>
+</figure>
+<p>This is what the given transition state looks like in this example:</p>
+<figure>
+    <img src="../Figures/2Ba_SCAN/TS_SCAN.png?raw=true" alt="SCAN Energy Profile" width="700"/>
+    <figcaption>Energy Profile of the SCAN job</figcaption>
+</figure>
+<p>This is a promising transition state, but we need to proceed with <a href="../Step_3_Optimise_the_Transition_State.html">steps 3</a> and <a href="../Step_4_Validate_TS/index.html">4</a> to make sure it is ok. </p>
+<p>Once ORCA has finished and you have viewed your SCAN pathway and obtained your transition state, you should do the following check:</p>
+<h3 id="check-does-the-scan-path-make-sense-chemically-and-physically">Check: Does the SCAN path make sense chemically and physically<a class="headerlink" href="#check-does-the-scan-path-make-sense-chemically-and-physically" title="Permanent link">&para;</a></h3>
+<p>You will want to look at the SCAN path and check if it chemically and physically makes sense. If it does not, you need to redo the SCAN and try something else, like making the two atoms contract closer to each other rather than stretch, or maybe try contracting or expanding the distance between other atoms.  </p>
+<h3 id="advice-about-scans">Advice about SCANs<a class="headerlink" href="#advice-about-scans" title="Permanent link">&para;</a></h3>
+<p>In this example, I forced the SCAN to gradually decrease the distance between atom 11 (C) and atom 16 (H). However, this is not the only way I could have performed this SCAN. </p>
+<ul>
+<li>For example, I could have started with the Cu atom bonded to the N atom, and gradually decrease the distance between atoms 11 (C) and 17 (Cu) to force them to form a bond.</li>
+<li>I decided to start with a C-Cu-H bond and force the C and H to come together because I thought this was the best way to obtain the transition state for this mechanistic step.</li>
+<li>It is not uncommon that you need to try a few different SCAN paths to get the transition state you are looking for. </li>
+</ul>
+<h2 id="what-should-i-do-if-i-need-to-restart-a-scan-run">What should I do if I need to restart a SCAN run<a class="headerlink" href="#what-should-i-do-if-i-need-to-restart-a-scan-run" title="Permanent link">&para;</a></h2>
+<p>Sometimes a SCAN job may fail. However, rather than resetting the SCAN job from beginning, you may want your SCAN job to resume from the last converged SCAN image. </p>
+<p>If you want to restart the SCAN job from the last converged image, here is a guide to how to do this (<a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/tree/main/Examples/Step2_Find_TS/Step2Ba_SCAN/SCAN_Restarted_Example">click here to see the example files for this procedure in Github</a>):</p>
+<ol>
+<li>
+<p><strong>If you are restarting your SCAN job for the first time</strong>: Make a new folder called <code>SCAN_1</code>, and move all your SCAN files into this folder. Do this by running the lines below in your terminal:</p>
+<div class="language-bash highlight"><span class="filename">Make a new SCAN folder and place all SCAN files into it</span><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>mkdir<span class="w"> </span>SCAN_1
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>mv<span class="w"> </span>-v<span class="w"> </span>*<span class="w"> </span>SCAN_1
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You will see a message like this when you run the <code>mv -v * SCAN_1</code> command. </p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>mv:<span class="w"> </span>cannot<span class="w"> </span>move<span class="w"> </span>‘SCAN_1’<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>subdirectory<span class="w"> </span>of<span class="w"> </span>itself,<span class="w"> </span>‘SCAN_1/SCAN_1’
+</span></code></pre></div>
+<p>This is normal and expected. Ignore this issue. </p>
+</div>
+</li>
+<li>
+<p>Make a new folder called <code>SCAN_2</code>:</p>
+<div class="language-bash highlight"><span class="filename">Make a new SCAN folder</span><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>mkdir<span class="w"> </span>SCAN_2
+</span></code></pre></div>
+</li>
+<li>
+<p>Copy the ORCA input file, slurm submit file, and the last converged SCAN xyz file. This is the latest numbered xyz file. An example of this is given below:</p>
+<div class="language-bash highlight"><span class="filename">Copy SCAN file from the previous SCAN job over to the new SCAN folder</span><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>cp<span class="w"> </span>-rv<span class="w"> </span>SCAN_1/orca.inp<span class="w">     </span>SCAN_2/orca.inp
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>cp<span class="w"> </span>-rv<span class="w"> </span>SCAN_1/submit.sl<span class="w">    </span>SCAN_2/submit.sl
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>cp<span class="w"> </span>-rv<span class="w"> </span>SCAN_1/orca.059.xyz<span class="w"> </span>SCAN_2/orca.059.xyz
+</span></code></pre></div>
+</li>
+<li>
+<p>Change directory into the new SCAN folder, then change the name of the last converged SCAN xyz file to another name, such as <code>last_converged_SCAN_image_restart.xyz</code></p>
+<div class="language-bash highlight"><span class="filename">Copy SCAN file from the previous SCAN job over to the new SCAN folder</span><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nb">cd</span><span class="w"> </span>SCAN_2
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>mv<span class="w"> </span>orca.059.xyz<span class="w"> </span>last_converged_SCAN_image_restart.xyz
+</span></code></pre></div>
+</li>
+<li>
+<p>Open the copied <code>orca.inp</code> file, and make two changes to this file</p>
+<ol>
+<li>
+<p>Change the name of the xyz file give in in the <code>xyzfile</code> line to <code>last_converged_SCAN_image_restart.xyz</code></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>* xyzfile 1 1 last_converged_SCAN_image_restart.xyz
+</span></code></pre></div>
+</li>
+<li>
+<p>In the <code>GEOM</code> section: </p>
+<ul>
+<li>Change the bond distance between the two atoms of interest as given in <code>last_converged_SCAN_image_restart.xyz</code>. Get this by measuring the distance between the two atoms of interest in <code>ase gui last_converged_SCAN_image_restart.xyz</code></li>
+<li>Change the number of SCAN iterations to perform in order to keep displacement between SCAN images the same. For example, here the original displacement was <span class="arithmatex">\(\frac{\rm{d_f} - \rm{d_i}}{(\rm{no.\:SCAN\:interations})-1} = \frac{3.245 - 0.745}{126-1} = 0.02\)</span>. The distance between atoms 11 and 16 in <code>last_converged_SCAN_image_restart.xyz</code> is <code>2.285 Å</code>. Therefore, we need to perform <span class="arithmatex">\(\frac{d_f(\rm{new}) - d_i}{\rm{displacement}}+1 = \frac{2.085 - 0.745}{0.02}+1 = 68\)</span> (The <span class="arithmatex">\(+1\)</span> is so we include the initial image in the SCAN procedure).</li>
+</ul>
+<p>An examples of the two components of <code>GEOM</code> that need to be changed are given below</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>%GEOM
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    SCAN B 11 16 = new_initial_distance, 0.745, no_of_SCAN_iterations END
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>END
+</span></code></pre></div>
+<p>For example:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>%GEOM
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    SCAN B 11 16 = 2.085, 0.745, 68 END
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>END
+</span></code></pre></div>
+</li>
+</ol>
+<p>An example of the updated <code>orca.inp</code> file is shown below</p>
+<div class="language-text highlight"><span class="filename">Example of the orca.inp file for the updated SCAN job</span><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>!B3LYP DEF2-TZVP D3BJ
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>!OPT NormalOPT TightSCF defgrid2 # Try TightOPT if you have convergence problems. 
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>%SCF
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>    MaxIter 2000       # Here setting MaxIter to a very high number. Intended for systems that require sometimes 1000 iterations before converging (very rare).
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    DIISMaxEq 5        # Default value is 5. A value of 15-40 necessary for difficult systems.
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>    directresetfreq 15 # Default value is 15. A value of 1 (very expensive) is sometimes required. A value between 1 and 15 may be more cost-effective.
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>END
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>%CPCM EPSILON 6.02 REFRAC 1.3723 END
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>%PAL NPROCS 32 END
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>%maxcore 2000
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>%GEOM 
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>    SCAN B 11 16 = 2.085, 0.745, 68 END
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>    MaxIter 200 
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>END
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>* xyzfile 1 1 last_converged_SCAN_image_restart.xyz
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>I have also included <code>MaxIter 200</code> in thr <code>GEOM</code> section. This was because I was having convergence issues because the number of geometry optimisations was going over the default value of <code>50</code>. I increased this to <code>200</code> so that it would run without problems in this example. </p>
+</div>
+</li>
+<li>
+<p>Submit your ORCA job to slurm, or run your ORCA job however you usually run ORCA. </p>
+</li>
+</ol>
+<p>Once your SCAN job has completed to your satisfaction, you can use <code>viewORCA scan</code> to view all your SCAN runs together. To do this, run <code>viewORCA scan</code> in the folder containing your <code>SCAN_1</code>, <code>SCAN_2</code>, <code>SCAN_3</code>, ... folders. <code>viewORCA scan</code> will collate all the SCAN jobs together in numerical order so that it looks as if only one SCAN job ran.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code>viewORCA scan</code> will also still create a <code>SCAN_images.xyz</code> file, containing the SCANs from all your SCAN folders pasted together. </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li><a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/tree/main/Examples/Step2_Find_TS/Step2Ba_SCAN/SCAN_Restarted_Example">Click here</a> to see the example files for this procedure in Github. </li>
+<li><a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/Examples/Step2_Find_TS/Step2Ba_SCAN/SCAN_Restarted_Example/SCAN_images.xyz">Click here</a> for the <code>SCAN_images.xyz</code> created for this restarted SCAN job. You should see that it gives the same <code>SCAN_images.xyz</code> file as if the SCAN job ran successfully in one go (<a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/Examples/Step2_Find_TS/Step2Ba_SCAN/SCAN_NormalOPT/SCAN_images.xyz">as given here</a>).</li>
+</ul>
+</div>
+<h2 id="other-information-about-performing-scan-calculations-in-orca">Other information about performing <code>SCAN</code> calculations in ORCA<a class="headerlink" href="#other-information-about-performing-scan-calculations-in-orca" title="Permanent link">&para;</a></h2>
+<p><a href="https://sites.google.com/site/orcainputlibrary/geometry-optimizations/tutorial-saddlepoint-ts-optimization-via-relaxed-scan">Click here</a> to learn more about SCAN calculations from the ORCA Input Library.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a href="https://sites.google.com/site/orcainputlibrary">ORCA Input Library</a> is a great source of information about performing calculations in ORCA.</p>
+</div>
+<h2 id="troubleshooting-the-scan-calculation">Troubleshooting the <code>SCAN</code> calculation<a class="headerlink" href="#troubleshooting-the-scan-calculation" title="Permanent link">&para;</a></h2>
+<p>Here are some troubleshooting tips for performing this optimisation step.</p>
+<p>No troubleshooting issues have been found yet. </p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>If you have any issues about this step, <a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/issues">raise a <code>New issue</code> at the Issues section by clicking here</a>.</p>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="Step_2A_Prepare_The_Reaction_System.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Step 2A - Prepare Reaction System">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Step 2A - Prepare Reaction System
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="Step_2Bb_The_NEB_Method.html" class="md-footer__link md-footer__link--next" aria-label="Next: Step 2Bb - NEB">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Step 2Bb - NEB
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 <a href="https://github.com/geoffreyweal"  target="_blank" rel="noopener">Geoffrey Weal</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/geoffreyweal" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1M496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2m-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3m-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://pypi.org/project/vieworca" target="_blank" rel="noopener" title="pypi.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/geoffreyweal" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/geoffrey-weal-905725196" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://orcid.org/0000-0002-3477-160X" target="_blank" rel="noopener" title="orcid.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M294.7 188.2h-45.9V342h47.5c67.6 0 83.1-51.3 83.1-76.9 0-41.6-26.5-76.9-84.7-76.9M256 8a248 248 0 1 0 0 496 248 248 0 1 0 0-496m-80.8 360.8h-29.8V161.3h29.8zM160.3 98.5a19.6 19.6 0 1 1 0 39.2 19.6 19.6 0 1 1 0-39.2M300 369h-81V161.3h80.6c76.7 0 110.4 54.8 110.4 103.9 0 53.3-41.7 103.9-110 103.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy", "content.code.select", "navigation.footer", "content.tooltips", "navigation.indexes", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "toc.follow"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1691 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="The procedure for investigating chemical mechanisms in ORCA is described here">
+      
+      
+        <meta name="author" content="Geoffrey Weal">
+      
+      
+        <link rel="canonical" href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/Step_2_Examine_Reaction_Pathway/Step_2Bb_The_NEB_Method.html">
+      
+      
+        <link rel="prev" href="Step_2Ba_The_SCAN_Method.html">
+      
+      
+        <link rel="next" href="../Step_3_Optimise_the_Transition_State.html">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>Step 2Bb - NEB - Procedure for Investigating Reaction Mechanisms in ORCA</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="Step 2Bb - NEB - Procedure for Investigating Reaction Mechanisms in ORCA" >
+      
+        <meta  property="og:description"  content="The procedure for investigating chemical mechanisms in ORCA is described here" >
+      
+        <meta  property="og:image"  content="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/assets/images/social/Step_2_Examine_Reaction_Pathway/Step_2Bb_The_NEB_Method.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/Step_2_Examine_Reaction_Pathway/Step_2Bb_The_NEB_Method.html" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="Step 2Bb - NEB - Procedure for Investigating Reaction Mechanisms in ORCA" >
+      
+        <meta  name="twitter:description"  content="The procedure for investigating chemical mechanisms in ORCA is described here" >
+      
+        <meta  name="twitter:image"  content="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/assets/images/social/Step_2_Examine_Reaction_Pathway/Step_2Bb_The_NEB_Method.png" >
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#step-2bb-nudged-elastic-band-neb-calculations-under-construction" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="Procedure for Investigating Reaction Mechanisms in ORCA" class="md-header__button md-logo" aria-label="Procedure for Investigating Reaction Mechanisms in ORCA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Procedure for Investigating Reaction Mechanisms in ORCA
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Step 2Bb - NEB
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-1h-4m2-13a5.002 5.002 0 0 0-3 9v2c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-2a4.997 4.997 0 0 0 1-7c-.94-1.26-2.43-2-4-2m1 7.82V17h-2v-2.18A3 3 0 0 1 11.17 11 3.003 3.003 0 0 1 15 9.16c1.56.56 2.38 2.27 1.83 3.84-.3.85-.98 1.5-1.83 1.82M7.68 15H7v1c0 .55.45 1 1 1h1v-.12c-.54-.55-1-1.18-1.32-1.88M13.6 5C12.5 2.47 9.53 1.33 7 2.45S3.34 6.5 4.45 9.04c.34.77.88 1.46 1.55 1.96v2c0 .55.45 1 1 1h.3c-.2-.65-.3-1.32-.3-2 0-3.71 2.89-6.79 6.6-7"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="green"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    geoffreyweal/ORCA_Mechanism_Procedure
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../index.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Programs_to_Install.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Programs to Install
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Investigating_Mechanisms.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Investigate
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Before_You_Begin.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Before You Begin
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Step_1_Locally_Optimise_Reactant_and_Product.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  1. Optimise R and P
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="index.html" class="md-tabs__link">
+          
+  
+  
+    
+  
+  2. Examine Pathway
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Step_3_Optimise_the_Transition_State.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  3. Optimise TS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Step_4_Validate_TS/index.html" class="md-tabs__link">
+          
+  
+  
+    
+  
+  4. Validate TS
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Step_5_Compile_Results.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  5. Compile Results
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://geoffreyweal.github.io/viewORCA/viewORCA_Manual" class="md-tabs__link">
+        
+  
+  
+    
+  
+  viewORCA Manual
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="Procedure for Investigating Reaction Mechanisms in ORCA" class="md-nav__button md-logo" aria-label="Procedure for Investigating Reaction Mechanisms in ORCA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    Procedure for Investigating Reaction Mechanisms in ORCA
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    geoffreyweal/ORCA_Mechanism_Procedure
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Programs_to_Install.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Programs to Install
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Investigating_Mechanisms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Investigate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Before_You_Begin.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Before You Begin
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Step_1_Locally_Optimise_Reactant_and_Product.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Optimise R and P
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="index.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    2. Examine Pathway
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            2. Examine Pathway
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Step_2A_Prepare_The_Reaction_System.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Step 2A - Prepare Reaction System
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Step_2Ba_The_SCAN_Method.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Step 2Ba - SCAN
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Step 2Bb - NEB
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Step_2Bb_The_NEB_Method.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Step 2Bb - NEB
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#step-2bb1-choose-an-optimised-structure-and-modify-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2Bb.1: Choose an Optimised Structure and Modify it
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2bb2-optimise-reactant-from-product-or-product-from-reactant-with-constraints-optional-but-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2Bb.2: Optimise Reactant from Product (or Product from Reactant) With Constraints (Optional but Recommended)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2bb3-optimise-reactant-from-product-or-product-from-reactant-without-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2Bb.3: Optimise Reactant from Product (or Product from Reactant) Without Constraints
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2bb4-double-check-the-reactant-and-product-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2Bb.4: Double-Check the Reactant and Product Structures
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2bb5-perform-the-climbing-image-nudge-elastic-band-ci-neb-calculation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2Bb.5: Perform the Climbing Image - Nudge Elastic Band (CI-NEB) Calculation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2Bb.5: Perform the Climbing Image - Nudge Elastic Band (CI-NEB) Calculation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#outputs-from-orca" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outputs from ORCA
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#important-things-to-do-while-the-neb-calculation-is-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      IMPORTANT: Things to do while the NEB calculation is running
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-analyse-the-output-files-after-the-neb-calculation-has-finished" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to analyse the output files after the NEB calculation has finished
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-comments-about-nebs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other comments about NEBs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Other comments about NEBs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comments-about-the-opt_method-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comments about the Opt_Method settings
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-information-about-performing-nebs-in-orca" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other Information about performing NEBs in ORCA
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-the-nudged-elastic-band-neb-calculation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting the Nudged Elastic Band (NEB) Calculation
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Step_3_Optimise_the_Transition_State.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3. Optimise TS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../Step_4_Validate_TS/index.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    4. Validate TS
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            4. Validate TS
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Step_4_Validate_TS/Step_4A_The_IRC_Method.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Step 4A - The IRC Method
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Step_4_Validate_TS/Step_4B_Local_Optimisation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Step 4B - Optimise the Forward and Backwards States
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Step_5_Compile_Results.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5. Compile Results
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://geoffreyweal.github.io/viewORCA/viewORCA_Manual" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    viewORCA Manual
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="step-2bb-nudged-elastic-band-neb-calculations-under-construction">Step 2Bb: Nudged Elastic Band (NEB) Calculations (UNDER CONSTRUCTION)<a class="headerlink" href="#step-2bb-nudged-elastic-band-neb-calculations-under-construction" title="Permanent link">&para;</a></h1>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Download the template folder for this step by clicking the button below and work on the files in the template folder as you read through this tutorial. </p>
+<p><a :download=":download" class="md-button md-button--primary" href="../Files/Templates.zip">Download Templates.zip <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4.75 17.25a.75.75 0 0 1 .75.75v2.25c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V18a.75.75 0 0 1 1.5 0v2.25A1.75 1.75 0 0 1 18.25 22H5.75A1.75 1.75 0 0 1 4 20.25V18a.75.75 0 0 1 .75-.75"/><path d="M5.22 9.97a.75.75 0 0 1 1.06 0l4.97 4.969V2.75a.75.75 0 0 1 1.5 0v12.189l4.97-4.969a.749.749 0 1 1 1.06 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0l-6.25-6.25a.75.75 0 0 1 0-1.06"/></svg></span></a></p>
+</div>
+<p>In an NEB, we trace a path from the reactant to the product. An optimisation is performed across all the images at the same time in order to try to find the transition step.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The NEB process is a bit more involved compared to the other steps. </p>
+</div>
+<p>The general steps for performing an NEB calculation are:</p>
+<ol>
+<li><a href="Step_2Bb_The_NEB_Method.html#step-2bb1-choose-an-optimised-structure-and-modify-it">Choose an optimised structure and modify it</a>.</li>
+<li><a href="Step_2Bb_The_NEB_Method.html#step-2bb2-optimise-reactant-from-product-or-product-from-reactant-with-constraints-optional-but-recommended">Optimise the modified structure with constraints (optional, but recommended)</a>.</li>
+<li><a href="Step_2Bb_The_NEB_Method.html#step-2bb3-optimise-reactant-from-product-or-product-from-reactant-without-constraints">Optimise the modified structure without constraints</a>.</li>
+<li><a href="Step_2Bb_The_NEB_Method.html#step-2bb4-double-check-the-reactant-and-product-structures">Double-check the reactant and product structures</a>.</li>
+<li><a href="Step_2Bb_The_NEB_Method.html#step-2bb5-perform-the-climbing-image-nudge-elastic-band-ci-neb-calculation">Perform the Climbing Image - Nudge Elastic Band (CI-NEB) calculation</a>.</li>
+</ol>
+<h2 id="step-2bb1-choose-an-optimised-structure-and-modify-it">Step 2Bb.1: Choose an Optimised Structure and Modify it<a class="headerlink" href="#step-2bb1-choose-an-optimised-structure-and-modify-it" title="Permanent link">&para;</a></h2>
+<p>To begin, it is a good idea to take either the optimised <code>Reactant</code> or <code>Product</code> structure from <a href="../Step_1_Locally_Optimise_Reactant_and_Product.html">Step 1</a>. Then, move the relevant atoms in the structure of the <code>Reactant</code> (<code>Product</code>) so that it resembles the <code>Product</code> (<code>Reactant</code>) somewhat. </p>
+<ul>
+<li>The reason for doing this is to make sure any atoms not involved directly in the mechanism are: <ol>
+<li>Ordered correctly for NEB calculations, and </li>
+<li>To try to keep these atoms in the same position as best as possible. </li>
+</ol>
+</li>
+<li>The reason for doing this will be clearer once we perform the NEB calculation in <a href="Step_2Bb_The_NEB_Method.html#step-2bb5-perform-the-climbing-image-nudge-elastic-band-ci-neb-calculation">Step 2Bb.5</a>. </li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Once you have moved the atoms in your modified structure, make sure the modified atoms are fairly close to each other. This is because ORCA (as well as any DFT program) can have trouble optimising structures where atoms are initially far away from each other. </p>
+<ul>
+<li>As a rule of thumb, any atoms you have modified that are bonded to eachother should be about ~0.5 Å - ~0.75 Å apart. It is easier for ORCA to increase bond lengths during optimisations rather than decrease them. </li>
+</ul>
+</div>
+<p>In this example below, I have chosen the <code>Product</code> structure to focus on. I then moved atom 17 (Cu) to the other side of the N atom (atom 12), and moved atom 14 (H) down so that it was close to the C atom (atom 11). </p>
+<figure>
+    <img src="../Figures/2Bb_NEB/Step2Bb_1_Choose_an_Optimised_Structure/Make_new_reactant.png?raw=true" alt="Make Reactant" width="800"/>
+    <figcaption>Example where the optimised product has been modified to resemble the reactant structure.</figcaption>
+</figure>
+<h2 id="step-2bb2-optimise-reactant-from-product-or-product-from-reactant-with-constraints-optional-but-recommended">Step 2Bb.2: Optimise Reactant from Product (or Product from Reactant) With Constraints (Optional but Recommended)<a class="headerlink" href="#step-2bb2-optimise-reactant-from-product-or-product-from-reactant-with-constraints-optional-but-recommended" title="Permanent link">&para;</a></h2>
+<p>Next, we perform a geometric optimisation calculation on this modified structure. However, we don't want the atoms that are not involved in the mechanism to move. </p>
+<ul>
+<li>To achieve this, <ins>we constrain the atoms in the molecule that are not involved in the mechanism</ins>.</li>
+</ul>
+<p>In this example, we will optimise the newly created reactant structure. Here, we have chosen to constrain the atoms in the benzene moiety from moving. The <code>orca.inp</code> file for this example is given below (also <a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/Examples/Step2_Find_TS/Step_2Bb_NEB/Step2Bb_2_Optimise_Reactant_from_Product_with_constraints/orca.inp">located here</a>): </p>
+<div class="language-text highlight"><span class="filename">Example orca.inp file used to perform a geometric optimisation calculation, including constrained atoms</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>!B3LYP DEF2-TZVP D3BJ 
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>!OPT FREQ TightOPT TightSCF defgrid2
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>%SCF
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    MaxIter 2000       # Here setting MaxIter to a very high number. Intended for systems that require sometimes 1000 iterations before converging (very rare).
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    DIISMaxEq 5        # Default value is 5. A value of 15-40 necessary for difficult systems.
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    directresetfreq 15 # Default value is 15. A value of 1 (very expensive) is sometimes required. A value between 1 and 15 may be more cost-effective.
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>END
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>%CPCM EPSILON 6.02 REFRAC 1.3723 END
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>%PAL NPROCS 32 END
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>%maxcore 2000 # This indicates you want ORCA to use only 2GB per core maximum, so ORCA will use only 2GB*32=64GB of memory in total.
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>%GEOM
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    Constraints
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        {C 0 C}
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        {C 1 C}
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        {C 2 C}
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        {C 3 C}
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        {C 4 C}
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        {C 5 C}
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    END
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>END
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>* xyzfile 1 1 reactant.xyz 
+</span></code></pre></div>
+<p>The optimisation of this constrained molecule is shown below:</p>
+<figure>
+    <img src="../Figures/2Bb_NEB/Step2Bb_2_Optimise_Reactant_from_Product_with_constraints/Optimise_Reactant.gif?raw=true" alt="Optimise Constrained Reactant" width="600"/>
+    <figcaption>Optimise Constrained Reactant</figcaption>
+</figure>
+<p>By constraining the benzyl atom in benzylamine, we have allowed the Cu atom to optimise to an ideal position while keeping the benzyl moiety in the same place. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is an optional step as we perform another geometric optimisation step in <a href="Step_2Bb_The_NEB_Method.html#step-2bb3-optimise-reactant-from-product-or-product-from-reactant-without-constraints">Step 2Bb.3</a>. </p>
+<ul>
+<li>The reason for this contrained geometric optimisation step is because it makes it easier to view the structural change from our reactant to product structures and confirm both the reactant and product structures are in fact the structures we want to investigate the mechanistic step for. </li>
+<li>While this step is optional, it is highly recommended to perform this constrained optimisation job before performing a unconstrained geometric optimisation in <a href="Step_2Bb_The_NEB_Method.html#step-2bb3-optimise-reactant-from-product-or-product-from-reactant-without-constraints">Step 2Bb.3</a>, as it makes it easier to check you are happy with your reactant and product structure before performing the NEB calculation. </li>
+</ul>
+</div>
+<h2 id="step-2bb3-optimise-reactant-from-product-or-product-from-reactant-without-constraints">Step 2Bb.3: Optimise Reactant from Product (or Product from Reactant) Without Constraints<a class="headerlink" href="#step-2bb3-optimise-reactant-from-product-or-product-from-reactant-without-constraints" title="Permanent link">&para;</a></h2>
+<p>Now that we have optimised the constrained reactant, we now <ins>repeat the optimisation process above, but without the constraints</ins>.</p>
+<ul>
+<li>We do this to make sure that this structure is absolutely in a local minimum.</li>
+<li>We do not expect the atoms in this molecule to move much, as the atoms we contrained were from an already optimised structure. </li>
+</ul>
+<p>The ORCA input file here as the same as in <a href="Step_2Bb_The_NEB_Method.html#step-2bb2-optimise-reactant-from-product-or-product-from-reactant-with-constraints-optional-but-recommended">Step 2Bb.2</a>, excluding the <code>Constraints</code> component. The <code>orca.inp</code> file for this example is given below (also <a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/Examples/Step2_Find_TS/Step_2Bb_NEB/Step2Bb_3_Optimise_Reactant_from_Product_without_constraints/orca.inp">located here</a>): </p>
+<div class="language-text highlight"><span class="filename">Example orca.inp file used to perform a geometric optimisation calculation, excluding constrained atoms</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>!B3LYP DEF2-TZVP D3BJ 
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>!OPT FREQ TightOPT TightSCF defgrid2
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>%SCF
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    MaxIter 2000       # Here setting MaxIter to a very high number. Intended for systems that require sometimes 1000 iterations before converging (very rare).
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    DIISMaxEq 5        # Default value is 5. A value of 15-40 necessary for difficult systems.
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    directresetfreq 15 # Default value is 15. A value of 1 (very expensive) is sometimes required. A value between 1 and 15 may be more cost-effective.
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>END
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>%CPCM EPSILON 6.02 REFRAC 1.3723 END
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>%PAL NPROCS 32 END
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>%maxcore 2000 # This indicates you want ORCA to use only 2GB per core maximum, so ORCA will use only 2GB*32=64GB of memory in total.
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>* xyzfile 1 1 reactant_opt_constrained.xyz 
+</span></code></pre></div>
+<p>In this example, the unconstrained optimisation calculation does not change the molecule much, which is what we ideally want. </p>
+<div class="admonition warning">
+<p class="admonition-title">IMPORTANT</p>
+<p>If you find the atoms have changed position significantly compared to that in <a href="Step_2Bb_The_NEB_Method.html#step-2bb2-optimise-reactant-from-product-or-product-from-reactant-with-constraints-optional-but-recommended">Step 2Bb.2</a>, this is a problem.</p>
+<ul>
+<li>If this happens, you likely need to go back to <a href="../Step_1_Locally_Optimise_Reactant_and_Product.html">Step 1</a> and make sure your original structure is geometrically optimised. </li>
+</ul>
+</div>
+<h2 id="step-2bb4-double-check-the-reactant-and-product-structures">Step 2Bb.4: Double-Check the Reactant and Product Structures<a class="headerlink" href="#step-2bb4-double-check-the-reactant-and-product-structures" title="Permanent link">&para;</a></h2>
+<p>Before beginning the NEB calculation, it is a good idea to perform some double checks on your reactant and product structures. These checks have already been mentioned, but it is worth mentioning them again. There are:</p>
+<ul>
+<li>Make sure you are happy with your input reactant and product structures, and</li>
+<li>Make sure the atom index ordering between your input reactant and product structures are as expected (i.e. the same). </li>
+</ul>
+<p>To help perform these two checks, use the <code>ase gui</code> as follows:</p>
+<ol>
+<li>
+<p>Change directory into the folder containing the NEB calculation, as open both your optimised reactant and products in <code>ase gui</code>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># change directory into the folder containing your NEB calculation</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">cd</span><span class="w"> </span>Examples/Step2Bb_4_Run_NEB_Calculation
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># View the reactant and product for the NEB calculation using ASE</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>ase<span class="w"> </span>gui<span class="w"> </span>reactant_opt_unconstrained.xyz<span class="w"> </span>product_opt.xyz
+</span></code></pre></div>
+</li>
+<li>
+<p>Next, in the ASE GUI click <code>View</code> -&gt; <code>Show Labels</code> -&gt; <code>Atom Index</code>. This will display the indices of the atoms in your reactant and product structures. </p>
+</li>
+<li>
+<p>Flick between the reactant and product structures and check that the structures of the reactant and product are: </p>
+<ul>
+<li>As expected (i.e. look like the reactant and product you want to understand the mechanistic step for).</li>
+<li>Have the same index ordering. </li>
+</ul>
+</li>
+</ol>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p>In the example below, </p>
+<ul>
+<li>The reactant and the product look like the mechanism we described in the first mechanistic step iun the <a href="../Before_You_Begin.html#mechanistic-step-example">Before You Begin step</a>, and</li>
+<li>We see that the atom indices for each atom in the reactant and product align with each other, such that there is a natural way to get from reactants to products. </li>
+</ul>
+<p>So we are happy <img alt="😄" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f604.svg" title=":smile:" /></p>
+<p><figure markdown="span">
+    <img src="../Figures/2Bb_NEB/Step2Bb_4_Run_NEB_Calculation/Consideration_before_Running_NEB_Calculation/Compare_Reactant_and_Product.png?raw=true" alt="Optimised Reactant and Product for NEB Calculation." width="800"/>
+    <figcaption>Optimised Reactant and Product for NEB Calculation.</figcaption>
+</figure></p>
+</div>
+<h2 id="step-2bb5-perform-the-climbing-image-nudge-elastic-band-ci-neb-calculation">Step 2Bb.5: Perform the Climbing Image - Nudge Elastic Band (CI-NEB) Calculation<a class="headerlink" href="#step-2bb5-perform-the-climbing-image-nudge-elastic-band-ci-neb-calculation" title="Permanent link">&para;</a></h2>
+<p>In an NEB, we trace a path from the reactant to the product. An optimisation is performed across all the images at the same time in order to try to find the transition step.</p>
+<p>In the <code>.inp</code> file, you want to include the following:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>!NEB-CI TightSCF defgrid2
+</span></code></pre></div>
+<p>The tags here indicate you want to do the following: </p>
+<ul>
+<li><code>NEB-CI</code>: This keyword will perform a nudged-elastic band (NEB) calculation upon your system using the climbing image (CI) varient of the NEB algorithm. </li>
+<li><code>TightSCF</code>: Tells ORCA to tighten the convergence criteria for each electronic step. </li>
+<li><code>defgrid2</code>: Indicates how fine we want the intergration grid to be (This is the default).</li>
+</ul>
+<p>We also include the following NEB settings: </p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>%NEB
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    NEB_END_XYZFILE &quot;product_opt.xyz&quot;
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    Nimages 100
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    Interpolation IDPP
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    Opt_Method LBFGS
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>END
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>* XYZfile 1 1 reactant_opt_unconstrained.xyz
+</span></code></pre></div>
+<p>The tags here indicate you want to do the following in your NEB calculation: </p>
+<ul>
+<li><code>NEB_END_XYZFILE</code>: This is the reactant structure you want to use. Include this file in the same place as your ORCA <code>.inp</code> file.</li>
+<li><code>Nimages</code>: These are the number of images you want to include in the NEB calculation (not including the reactant and product image). <ul>
+<li>In this example, we will create 102 images from <code>reactant_opt_unconstrained.xyz</code> to <code>opt_product.xyz</code> (100 images in between but not including <code>reactant_opt_unconstrained.xyz</code> to <code>opt_product.xyz</code>)</li>
+</ul>
+</li>
+<li><code>Interpolation</code>: This is the interpolation scheme first used to create all the initial images. </li>
+<li><code>Opt_Method</code>: This is the optimisation method used. </li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title"><strong>IMPORTANT</strong></p>
+<p>It is important that the atom ordering in your reactant and product <code>xyz</code> files are the same, otherwise you will problems where atoms seems to move about in nosense ways. </p>
+</div>
+<details class="note" open="open">
+<summary><strong>NOTE 1</strong></summary>
+<p>In this example I have set <code>Nimages</code> to 100. I chose this to allow for some smoothness between images in the mechanistic step. However, you could set this to much less and everything would probably work. For example, 20 would probably also work fine. </p>
+<ul>
+<li>Try not to use too many images, as this can cause problems and also increases the amount of time required for the NEB to converge. </li>
+</ul>
+</details>
+<details class="note" open="open">
+<summary><strong>NOTE 2</strong></summary>
+<p>I use <code>LBFGS</code> in this example as the optimisation method. This is a very good algorithm, but it can be a bit loose and cause issues. In testing I tried the <code>FIRE</code> method, This worked also, but causes jitters which can lead to problems. </p>
+<ul>
+<li>The point is if you have convergence problems, try using another method for <code>Opt_Method</code>. </li>
+<li>See the <a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/orca_manual_5_0_4.pdf">ORCA manual 5.0.4</a>: Page 784 for options for this setting. </li>
+</ul>
+</details>
+<p>In this example, we are looking at how a Cu atom could insert itself into a C-H bond. The full <code>orca.inp</code> file is given below (also <a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/Examples/Step2_Find_TS/Step_2Bb_NEB/Step2Bb_4_Run_NEB_Calculation/orca.inp">located here</a>): </p>
+<div class="language-text highlight"><span class="filename">Example orca.inp file used to perform a NEB calculation</span><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>!B3LYP DEF2-TZVP D3BJ
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>!NEB-CI TightSCF defgrid2
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>%SCF
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    MaxIter 2000       # Here setting MaxIter to a very high number. Intended for systems that require sometimes 1000 iterations before converging (very rare).
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    DIISMaxEq 5        # Default value is 5. A value of 15-40 necessary for difficult systems.
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    directresetfreq 15 # Default value is 15. A value of 1 (very expensive) is sometimes required. A value between 1 and 15 may be more cost-effective.
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>END
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>%CPCM EPSILON 6.02 REFRAC 1.3723 END
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>%PAL NPROCS 32 END
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>%maxcore 2000 # This indicates you want ORCA to use only 2GB per core maximum, so ORCA will use only 2GB*32=64GB of memory in total.
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>%NEB
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    NEB_END_XYZFILE &quot;product_opt.xyz&quot;
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    Nimages 100
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>    Interpolation IDPP
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>    Opt_Method LBFGS
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>END
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>* XYZfile 1 1 reactant_opt_unconstrained.xyz
+</span></code></pre></div>
+<h3 id="outputs-from-orca">Outputs from ORCA<a class="headerlink" href="#outputs-from-orca" title="Permanent link">&para;</a></h3>
+<p>ORCA will create a number of files, as well as the <code>output.out</code> file. These are the important ones to look at for NEB calculations: </p>
+<ul>
+<li><code>orca_initial_path_trj.xyz</code>: This is the initial NEB path that you want to investigate. </li>
+<li><code>orca_MEP_trj.xyz</code>: This is the NEB trajectory for the mechanism.</li>
+<li><code>orca_NEB-TS_converged.xyz</code>: This is the transition state that was obtained from this NEB calculation. </li>
+</ul>
+<h3 id="important-things-to-do-while-the-neb-calculation-is-running"><strong>IMPORTANT</strong>: Things to do while the NEB calculation is running<a class="headerlink" href="#important-things-to-do-while-the-neb-calculation-is-running" title="Permanent link">&para;</a></h3>
+<p>Once ORCA has begun running the NEB calculation, there are two things that you should do:</p>
+<ol>
+<li><strong>Check the <code>orca_initial_path_trj.xyz</code> file.</strong></li>
+<li><strong>Check the NEB calculation daily.</strong></li>
+</ol>
+<p>Below is a description of these two checks:</p>
+<p><strong>1. Check the <code>orca_initial_path_trj.xyz</code> file</strong></p>
+<p>Once ORCA begins, the first step in the NEB calculation is to create all the initial images connecting the reactant and the product using an interpolation scheme. </p>
+<ul>
+<li>ORCA will create a <a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/blob/main/Examples/Step2_Find_TS/Step_2Bb_NEB/Step2Bb_4_Run_NEB_Calculation/orca_initial_path_trj.xyz">file called <code>orca_initial_path_trj.xyz</code></a>. This file gives an idea of the initial NEB path that ORCA will begin investigating. </li>
+<li><ins><strong>Check this file in <code>ase gui</code> and see that this initial mechanistic pathway look somewhat sensible</strong></ins>.</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># change directory into the folder containing your NEB calculation</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">cd</span><span class="w"> </span>Examples/Step2Bb_4_Run_NEB_Calculation
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># View the reactant and product for the NEB calculation using ASE</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>ase<span class="w"> </span>gui<span class="w"> </span>orca_initial_path_trj.xyz
+</span></code></pre></div>
+<details class="example" open="open">
+<summary>Example</summary>
+<p>For this example, the <code>orca_initial_path_trj.xyz</code> file looks like this:</p>
+<p><figure markdown="span">
+    <img src="../Figures/2Bb_NEB/Step2Bb_4_Run_NEB_Calculation/Check_NEB_using_orca_initial_path_trj/Check_orca_initial_path_trj.gif?raw=true" alt="Check orca_initial_path_trj.xyz file" width="400"/>
+    <figcaption>Check the initial interpolation path given in the orca_initial_path_trj.xyz file</figcaption>
+</figure></p>
+<p>In this example, atom 14 (H) floats away in free space from atom 11 (C), and there is a bit of time before atom 14 bonds to atom 17 (Cu). </p>
+<ul>
+<li>This indicates there <em>may be</em> a problem and the NEB calculation might have trouble. </li>
+<li>However, NEB calculations are designed to change the mechanistic path to account for this and found a more likely mechanistric pathway, so this is not a horrible initial NEB pathway. </li>
+</ul>
+<p>I would be happy with this calculation to proceed as it is, but it would be wise to check this calculation daily as it runs. </p>
+</details>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The general rule is: The simplier you can make the initial NEB pathway, the more likely the NEB calculation will converge. </p>
+</div>
+<p><strong>2. Check the NEB calculation daily</strong></p>
+<p>NEB calculations, like any ORCA or DFT calculation, have the potential to go in weird directions that makes convergence unlikely. This is particularly the case for NEB calculations. For this reason, it is important to do the following checks on a daily basis: </p>
+<ol>
+<li>
+<p>Check the <code>orca_MEP_trj.xyz</code> file. This file describes the current reaction pathway as calculated by NEB. </p>
+<ul>
+<li>View this file by running <code>ase gui orca_MEP_trj.xyz</code> in the terminal. </li>
+<li>Hopefully the NEB path given in this file look better and better as ORCA proceeds. </li>
+<li><ins><strong>The main thing is to check that the NEB path given by <code>orca_MEP_trj.xyz</code> is still sensible by your chemical intuition</strong></ins>. </li>
+</ul>
+</li>
+<li>
+<p>Check the <code>output.log</code> file to make sure everything is running smoothly.</p>
+<ul>
+<li>The best way to check the <code>output.log</code> file is to scroll to the bottom of the <code>output.log</code> file. </li>
+<li>If there are any problems, it may come up in the <code>output.log</code> file.</li>
+<li>If you are using slurm, you should also look at the slurm output and error files to see if there are any issues reported there. </li>
+</ul>
+</li>
+<li>
+<p>Check how the energy profile of the NEB calculation has changed by running the <code>viewORCA neb_snap</code> command in your terminal. </p>
+<ul>
+<li>This command will present the energy profile snapshots of all the NEB iterations that ORCA has performed thus far. </li>
+<li>Run this command by changing directory to the folder containing your NEB run in the terminal, and then running the <code>viewORCA neb_snap</code> command.</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># cd into your optimisation folder</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nb">cd</span><span class="w"> </span>ORCA_Mechanism_Procedure/Examples/Step2_Find_TS/NEB
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># View the NEB calculation </span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>viewORCA<span class="w"> </span>neb_snap
+</span></code></pre></div>
+<ul>
+<li>
+<p><code>viewORCA neb_snap</code> will create two files. These are: </p>
+<ul>
+<li><code>orca_NEB_optimization.png</code>: This file contains the plots of all the NEB optimisation iterations that have been performed so far.</li>
+<li><code>orca_NEB_last_iteration.png</code>: This is the plot of the last NEB optimisation iteration.</li>
+</ul>
+</li>
+</ul>
+<details class="example" open="open">
+<summary>Example</summary>
+<p>Examples of the <code>orca_NEB_optimization.png</code> and <code>orca_NEB_last_iteration.png</code> files are shown below:</p>
+<p><figure markdown="span">
+    <img src="../Figures/2Bb_NEB/Step2Bb_4_Run_NEB_Calculation/Successful_NEB_using_NEB_CI/orca_NEB_optimization.png?raw=true" alt="orca_NEB_optimization.png" width="500"/>
+    <figcaption>Energy profile of each NEB optimisation iteration performed by ORCA. This is given by the 'orca_NEB_optimization.png' file.</figcaption>
+</figure></p>
+<p><figure markdown="span">
+    <img src="../Figures/2Bb_NEB/Step2Bb_4_Run_NEB_Calculation/Successful_NEB_using_NEB_CI/orca_NEB_last_iteration.png?raw=true" alt="orca_NEB_last_iteration.png" width="500"/>
+    <figcaption>Energy profile of the last NEB optimisation iteration, as performed by ORCA. This is given by the 'orca_NEB_last_iteration.png' file.</figcaption>
+</figure></p>
+</details>
+</li>
+</ol>
+<h3 id="how-to-analyse-the-output-files-after-the-neb-calculation-has-finished">How to analyse the output files after the NEB calculation has finished<a class="headerlink" href="#how-to-analyse-the-output-files-after-the-neb-calculation-has-finished" title="Permanent link">&para;</a></h3>
+<p>Once ORCA has finished performing the NEB calculation, we will want to visualise the NEB. You can visualize how ORCA has performed the mechanistic step by typing <code>viewORCA neb</code> into the terminal. </p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># cd into your optimisation folder</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nb">cd</span><span class="w"> </span>ORCA_Mechanism_Procedure/Examples/Step2_Find_TS/NEB
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># View the NEB calculation </span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>viewORCA<span class="w"> </span>neb
+</span></code></pre></div>
+<p>You will get a GUI that shows you the following NEB pathway:</p>
+<figure>
+    <img src="../Figures/2Bb_NEB/Step2Bb_4_Run_NEB_Calculation/Successful_NEB_using_NEB_CI/NEB_example.gif?raw=true" alt="NEB Images" width="600"/>
+    <figcaption>NEB Images</figcaption>
+</figure>
+<p>The energy profile for this example is given below:</p>
+<figure>
+    <img src="../Figures/2Bb_NEB/Step2Bb_4_Run_NEB_Calculation/Successful_NEB_using_NEB_CI/NEB_energy.png?raw=true" alt="NEB Energy Profile" width="600"/>
+    <figcaption>NEB Energy Profile</figcaption>
+</figure>
+<p>You can see that a transition state is given by ORCA as the <code>orca_NEB-CI_converged.xyz</code> file. This is what the given transition state looks like in this example:</p>
+<figure>
+    <img src="../Figures/2Bb_NEB/Step2Bb_4_Run_NEB_Calculation/Successful_NEB_using_NEB_CI/CI_NEB.png?raw=true" alt="NEB Energy Profile" width="600"/>
+    <figcaption>Transition State as obtained by the CI-NEB calculation.</figcaption>
+</figure>
+<h2 id="other-comments-about-nebs">Other comments about NEBs<a class="headerlink" href="#other-comments-about-nebs" title="Permanent link">&para;</a></h2>
+<h3 id="comments-about-the-opt_method-settings">Comments about the <code>Opt_Method</code> settings<a class="headerlink" href="#comments-about-the-opt_method-settings" title="Permanent link">&para;</a></h3>
+<p>The <code>LBFGS</code> is a common optimisation algorithm used in geometric optimisations. The note from ORCA is that <em>The L-BFGS is more aggressive and efficient, but also more error-prone.</em> Because of this, it is a common strategy to change the optimisation algorithm used to help the NEB calculation. </p>
+<ul>
+<li>In testing this proceedure I also used the <code>FIRE</code> which is also a good algorithm. </li>
+<li>However in this case, the <code>FIRE</code> algorithm was less able to scout the NEB. </li>
+<li>Here is the NEB for the same NEB calculation shown above using the <code>FIRE</code> method.</li>
+</ul>
+<p>This is the NEB path that I got from the NEB calculation using the <code>FIRE</code> algorithm: </p>
+<figure>
+    <img src="../Figures/2Bb_NEB/Step2Bb_4_Run_NEB_Calculation/NEB_using_FIRE/NEB_example.gif?raw=true" alt="NEB Images using the FIRE algorithm" width="600"/>
+    <figcaption>NEB Images using the FIRE algorithm</figcaption>
+</figure>
+<p>The energy profile for this example is given below:</p>
+<figure>
+    <img src="../Figures/2Bb_NEB/Step2Bb_4_Run_NEB_Calculation/NEB_using_FIRE/NEB_energy.png?raw=true" alt="NEB Energy Profile using the FIRE algorithm" width="600"/>
+    <figcaption>NEB Energy Profile using the FIRE algorithm</figcaption>
+</figure>
+<p>You can see from the NEB path and the energy profile that its a bit jittery, but overall the NEB did work as we found a good transition state:</p>
+<figure>
+    <img src="../Figures/2Bb_NEB/Step2Bb_4_Run_NEB_Calculation/NEB_using_FIRE/TS_NEB.png?raw=true" alt="NEB Energy Profile" width="600"/>
+    <figcaption>NEB Energy Profile</figcaption>
+</figure>
+<p>At the end of the day, it doesnt matter how "well" the NEB calculation did, it only depends if we find a sufficient transition state that we can further optimise in <a href="../Step_3_Optimise_the_Transition_State.html">Step 3: Optimise the Transition State</a>. So I would say I would be happy with how this NEB ran, and would have continued to Step 3. </p>
+<h2 id="other-information-about-performing-nebs-in-orca">Other Information about performing NEBs in ORCA<a class="headerlink" href="#other-information-about-performing-nebs-in-orca" title="Permanent link">&para;</a></h2>
+<p>The following links have good information for performing NEBs in ORCA:</p>
+<ul>
+<li><a href="https://www.orcasoftware.de/tutorials_orca/react/nebts.html">https://www.orcasoftware.de/tutorials_orca/react/nebts.html</a>: Nice article from the developers about how to perform an NEB in ORCA.</li>
+<li><a href="https://sites.google.com/site/orcainputlibrary/geometry-optimizations/tutorial-neb-calculations">https://sites.google.com/site/orcainputlibrary/geometry-optimizations/tutorial-neb-calculations</a>: Nice extra information for performing and analysising NEBs.</li>
+<li><a href="https://github.com/via9a/neb_visualize">https://github.com/via9a/neb_visualize</a>: Contain another program for analysing how the NEB optimised. This program is really good for figuring out how the NEB optimised itself, very helpful!</li>
+</ul>
+<h2 id="troubleshooting-the-nudged-elastic-band-neb-calculation">Troubleshooting the Nudged Elastic Band (<code>NEB</code>) Calculation<a class="headerlink" href="#troubleshooting-the-nudged-elastic-band-neb-calculation" title="Permanent link">&para;</a></h2>
+<p>Here are some troubleshooting tips for performing this optimisation step.</p>
+<p>Also look at the following websites for help:</p>
+<ul>
+<li><a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure?tab=readme-ov-file#troubleshooting">https://github.com/geoffreyweal/ORCA_Mechanism_Procedure?tab=readme-ov-file#troubleshooting</a></li>
+<li><a href="https://sites.google.com/site/orcainputlibrary/scf-convergence-issues">https://sites.google.com/site/orcainputlibrary/scf-convergence-issues</a> (apart of <a href="https://sites.google.com/site/orcainputlibrary">https://sites.google.com/site/orcainputlibrary</a>)</li>
+</ul>
+<p>No troubleshooting issues have been found yet. </p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>If you have any issues about this step, <a href="https://github.com/geoffreyweal/ORCA_Mechanism_Procedure/issues">raise a <code>New issue</code> at the Issues section by clicking here</a>.</p>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="Step_2Ba_The_SCAN_Method.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Step 2Ba - SCAN">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Step 2Ba - SCAN
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../Step_3_Optimise_the_Transition_State.html" class="md-footer__link md-footer__link--next" aria-label="Next: 3. Optimise TS">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                3. Optimise TS
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 <a href="https://github.com/geoffreyweal"  target="_blank" rel="noopener">Geoffrey Weal</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/geoffreyweal" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1M496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2m-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3m-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://pypi.org/project/vieworca" target="_blank" rel="noopener" title="pypi.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/geoffreyweal" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/geoffrey-weal-905725196" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://orcid.org/0000-0002-3477-160X" target="_blank" rel="noopener" title="orcid.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M294.7 188.2h-45.9V342h47.5c67.6 0 83.1-51.3 83.1-76.9 0-41.6-26.5-76.9-84.7-76.9M256 8a248 248 0 1 0 0 496 248 248 0 1 0 0-496m-80.8 360.8h-29.8V161.3h29.8zM160.3 98.5a19.6 19.6 0 1 1 0 39.2 19.6 19.6 0 1 1 0-39.2M300 369h-81V161.3h80.6c76.7 0 110.4 54.8 110.4 103.9 0 53.3-41.7 103.9-110 103.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "navigation.top", "navigation.tracking", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy", "content.code.select", "navigation.footer", "content.tooltips", "navigation.indexes", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "toc.follow"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
