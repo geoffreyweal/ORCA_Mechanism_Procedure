@@ -1,0 +1,29 @@
+*************************************************
+******************* ORCA 6.1.0-f.0 ******************
+*************************************************
+$Calculation_Status
+   &GeometryIndex 0
+   &version [&Type "String"] "6.1.0-f.0"
+   &progName [&Type "String"] "orca"
+   &Status [&Type "String"] "NORMAL TERMINATION"
+$End
+$Calculation_Info
+   &GeometryIndex 0
+   &Mult [&Type "Integer"] 1
+   &Charge [&Type "Integer"] 1
+   &NumOfAtoms [&Type "Integer"] 18
+   &NumOfElectrons [&Type "Integer"] 86
+   &NumOfBasisFuncts [&Type "Integer"] 347
+   &NumOfAuxCBasisFuncts [&Type "Integer"] 0
+   &NumOfAuxJBasisFuncts [&Type "Integer"] 582
+   &NumOfAuxJKBasisFuncts [&Type "Integer"] 0
+   &NumOfCABSBasisFuncts [&Type "Integer"] 0
+$End
+$Calculation_Timings
+   &GeometryIndex 0
+   &GTOINT [&Type "Double"]       7.5901370000000021e+00
+   &SCF [&Type "Double"]       4.6450948000000004e+01
+   &SCFGRAD [&Type "Double"]       1.2107960999999996e+01
+   &NEB [&Type "Double"]       9.0509911297999992e+04
+   &SUM [&Type "Double"]       9.0576060343999998e+04
+$End

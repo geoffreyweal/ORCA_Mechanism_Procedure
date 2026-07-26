@@ -1,0 +1,31 @@
+name: Upload Documents to Github.io 
+on:
+  push:
+    branches:
+      - master 
+      - main
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure Git Credentials
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
+      - uses: actions/cache@v4
+        with:
+          key: mkdocs-material-${{ env.cache_id }}
+          path: .cache
+          restore-keys: |
+            mkdocs-material-
+      #- run: sudo apt-get install ruby # Potentially needed for mathjax
+      #- run: sudo gem install kramdown # Potentially needed for mathjax
+      - run: pip install mkdocs-material[imaging] mkdocs-img2fig-plugin mkdocs-img2figv2-plugin mkdocs-material-extensions
+      - run: cd Documentation; mkdocs gh-deploy --force --clean --no-directory-urls
